@@ -1,24 +1,14 @@
 import 'package:flutter/material.dart';
+import '../ui/screens/splash/splash_screen.dart';
 
-class FruitClassification  extends StatelessWidget {
-  const FruitClassification ({super.key});
+class FruitClassificationApp extends StatelessWidget {
+  const FruitClassificationApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Fruit Classification',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-      home: const Scaffold(
-        body: Center(
-          child: Text(
-            'Fruit Classification',
-            style: TextStyle(fontSize: 22),
-          ),
-        ),
-      ),
+      home: SplashScreen(),
     );
   }
 }
