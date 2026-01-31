@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fruit_classification/ui/screens/home/home_screen.dart';
 import '../ui/screens/splash/splash_screen.dart';
 
 class FruitClassificationApp extends StatelessWidget {
@@ -6,9 +7,9 @@ class FruitClassificationApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      home: HomeScreen(),
     );
   }
 }
