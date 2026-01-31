@@ -80,7 +80,9 @@ class HomeScreen extends StatelessWidget {
               title: "Upload Image",
               subtitle: "From gallery",
               isPrimary: false,
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context, AppRoutes.uploadImageScreen);
+              },
             ),
 
             const SizedBox(height: 30),
