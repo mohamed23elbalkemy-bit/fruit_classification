@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import '../../../core/utils/app_colors.dart';
+import '../../../core/routes/app_routes.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -11,6 +11,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   double progress = 0.0;
+  Timer? _timer;
 
   @override
   void initState() {
@@ -19,16 +20,25 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _startLoading() {
-    Timer.periodic(const Duration(milliseconds: 300), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         progress += 0.15;
       });
 
       if (progress >= 1) {
         timer.cancel();
-
+        Navigator.pushReplacement(
+          context,
+          AppRoutes.onboarding1,
+        );
       }
     });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -38,7 +48,6 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Logo with glow
           Container(
             width: 160,
             height: 160,
@@ -46,7 +55,7 @@ class _SplashScreenState extends State<SplashScreen> {
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: Color(0xFF81C784).withOpacity(0.3),
+                  color: const Color(0xFF81C784).withOpacity(0.3),
                   blurRadius: 40,
                   spreadRadius: 20,
                 ),
@@ -100,23 +109,20 @@ class _SplashScreenState extends State<SplashScreen> {
               borderRadius: BorderRadius.circular(10),
               child: LinearProgressIndicator(
                 value: progress,
-                backgroundColor: Color(0xFF81C784).withOpacity(0.4),
+                backgroundColor: const Color(0xFF81C784),
                 valueColor: const AlwaysStoppedAnimation<Color>(
                   Color(0xFF4CAF50),
                 ),
                 minHeight: 6,
               ),
             ),
-
           ),
 
           const SizedBox(height: 12),
 
           const Text(
             'Loading...',
-            style: TextStyle(
-              color: Color(0xFF9E9E9E),
-            ),
+            style: TextStyle(color: Color(0xFF9E9E9E)),
           ),
         ],
       ),
