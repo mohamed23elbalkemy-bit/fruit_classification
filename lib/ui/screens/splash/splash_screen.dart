@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
         timer.cancel();
         Navigator.pushReplacement(
           context,
-          AppRoutes.onboarding1,
+          AppRoutes.onboarding1Screen,
         );
       }
     });

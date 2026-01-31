@@ -111,7 +111,7 @@ class Onboarding2 extends StatelessWidget {
             OnboardingButton(
               text: 'Next',
               onPressed: () {
-                Navigator.push(context, AppRoutes.onboarding3);
+                Navigator.push(context, AppRoutes.onboarding3Screen);
               },
             ),
 

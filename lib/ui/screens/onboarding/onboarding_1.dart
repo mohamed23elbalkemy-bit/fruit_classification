@@ -53,7 +53,7 @@ class Onboarding1 extends StatelessWidget {
             OnboardingButton(
               text: 'Next',
               onPressed: () {
-                Navigator.push(context, AppRoutes.onboarding2);
+                Navigator.push(context, AppRoutes.onboarding2Screen);
               },
             ),
 
