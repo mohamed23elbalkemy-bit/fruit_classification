@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fruit_classification/ui/screens/auth/login_screen.dart';
+import 'package:fruit_classification/ui/screens/auth/register_screen.dart';
 import '../../ui/screens/onboarding/onboarding_1.dart';
 import '../../ui/screens/onboarding/onboarding_2.dart';
 import '../../ui/screens/onboarding/onboarding_3.dart';
@@ -15,6 +17,14 @@ abstract final class AppRoutes {
 
   static MaterialPageRoute get onboarding3 {
     return MaterialPageRoute(builder: (_) => const Onboarding3());
+  }
+
+  static MaterialPageRoute get loginScreen {
+    return MaterialPageRoute(builder: (_) => const LoginScreen());
+  }
+
+  static MaterialPageRoute get registerScreen {
+    return MaterialPageRoute(builder: (_) => const RegisterScreen());
   }
 
 }

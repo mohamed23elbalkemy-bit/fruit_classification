@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/routes/app_routes.dart';
 import '../../../core/widgets/onboarding_button.dart';
 import '../../../core/widgets/onboarding_indicator.dart';
 
@@ -51,7 +52,9 @@ class Onboarding3 extends StatelessWidget {
 
             OnboardingButton(
               text: 'Get Started',
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, AppRoutes.loginScreen);
+              },
             ),
           ],
         ),
