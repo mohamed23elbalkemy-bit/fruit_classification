@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/routes/app_routes.dart';
 import '../../../core/widgets/mainActionButton.dart';
 import '../../../core/widgets/recentItem.dart';
 
@@ -27,7 +28,9 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.person_outline, color: Colors.black),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context, AppRoutes.profileScreen);
+            },
           ),
         ],
       ),
@@ -64,7 +67,9 @@ class HomeScreen extends StatelessWidget {
               title: "Open Camera",
               subtitle: "Take a photo",
               isPrimary: true,
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context, AppRoutes.cameraScreen);
+              },
             ),
 
             const SizedBox(height: 15),
@@ -94,7 +99,9 @@ class HomeScreen extends StatelessWidget {
                 ),
 
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(context, AppRoutes.historyScreen);
+                  },
                   child: const Text(
                     "View All",
                     style: TextStyle(
@@ -114,14 +121,14 @@ class HomeScreen extends StatelessWidget {
               confidence: "98%",
               time: "2 mins ago",
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 10),
             const RecentItem(
               image: "assets/images/orange_image.jpg",
               title: "Orange",
               confidence: "95%",
               time: "15 mins ago",
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 10),
             const RecentItem(
               image: "assets/images/banana_image.jpg",
               title: "Banana",
