@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white,
+      backgroundColor: Colors.white,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -46,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.lightGreen.withOpacity(0.3),
+                  color: Color(0xFF81C784).withOpacity(0.3),
                   blurRadius: 40,
                   spreadRadius: 20,
                 ),
@@ -57,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 width: 110,
                 height: 110,
                 decoration: const BoxDecoration(
-                  color: AppColors.white,
+                  color: Colors.white,
                   shape: BoxShape.circle,
                 ),
                 child: Padding(
@@ -78,7 +78,7 @@ class _SplashScreenState extends State<SplashScreen> {
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
-              color: AppColors.primaryGreen,
+              color: Color(0xFF4CAF50),
             ),
           ),
 
@@ -88,7 +88,7 @@ class _SplashScreenState extends State<SplashScreen> {
             'AI-Powered Fruit Recognition',
             style: TextStyle(
               fontSize: 14,
-              color: AppColors.textGrey,
+              color: Color(0xFF9E9E9E),
             ),
           ),
 
@@ -100,9 +100,9 @@ class _SplashScreenState extends State<SplashScreen> {
               borderRadius: BorderRadius.circular(10),
               child: LinearProgressIndicator(
                 value: progress,
-                backgroundColor: AppColors.lightGreen.withOpacity(0.4),
+                backgroundColor: Color(0xFF81C784).withOpacity(0.4),
                 valueColor: const AlwaysStoppedAnimation<Color>(
-                  AppColors.primaryGreen,
+                  Color(0xFF4CAF50),
                 ),
                 minHeight: 6,
               ),
@@ -115,7 +115,7 @@ class _SplashScreenState extends State<SplashScreen> {
           const Text(
             'Loading...',
             style: TextStyle(
-              color: AppColors.textGrey,
+              color: Color(0xFF9E9E9E),
             ),
           ),
         ],
