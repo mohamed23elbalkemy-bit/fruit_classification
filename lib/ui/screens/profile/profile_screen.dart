@@ -1,15 +1,26 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:fruit_classification/ui/screens/profile/storage/user_storage.dart';
+import 'package:fruit_classification/ui/screens/history/history_screen.dart';
+import 'editProfile/edit_profile_screen.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  @override
   Widget build(BuildContext context) {
+    final user = UserStorage.currentUser;
+
     return Scaffold(
       backgroundColor: const Color(0xFFF3FFF6),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Color(0xFFF3FFF6),
+        backgroundColor: const Color(0xFFF3FFF6),
         title: const Text(
           "Profile",
           style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
@@ -20,7 +31,6 @@ class ProfileScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-
             /// USER CARD
             Container(
               padding: const EdgeInsets.all(16),
@@ -30,21 +40,23 @@ class ProfileScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  const CircleAvatar(
+                  CircleAvatar(
                     radius: 35,
-                    backgroundImage:
-                    AssetImage("assets/images/profile_image.jpg"),
+                    backgroundImage: user.imagePath.startsWith('assets')
+                        ? AssetImage(user.imagePath)
+                        : FileImage(File(user.imagePath)) as ImageProvider,
                   ),
                   const SizedBox(height: 16),
-                  const Text(
-                    "Mohamed Nasr",
-                    style: TextStyle(
+                  Text(
+                    user.name,
+                    style: const TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                   const SizedBox(height: 5),
-                  const Text(
-                    "mohamed23elbalkemy@gmail.com",
-                    style: TextStyle(color: Colors.black54, fontSize: 13),
+                  Text(
+                    user.email,
+                    style: const TextStyle(
+                        color: Colors.black54, fontSize: 13),
                   ),
                 ],
               ),
@@ -52,37 +64,72 @@ class ProfileScreen extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            profileItem(Icons.edit, "Edit Profile"),
-            profileItem(Icons.history, "History"),
+            /// ✏️ Edit Profile
+            profileItem(
+              Icons.edit,
+              "Edit Profile",
+              onTap: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const EditProfileScreen(),
+                  ),
+                );
+                setState(() {});
+              },
+            ),
+
+            /// 🕘 History (NEW 🔥)
+            profileItem(
+              Icons.history,
+              "History",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const HistoryScreen(),
+                  ),
+                );
+              },
+            ),
+
             profileItem(Icons.settings, "Settings"),
-            profileItem(Icons.logout, "Log Out",
-                color: Colors.redAccent),
+            profileItem(Icons.logout, "Log Out", color: Colors.redAccent),
           ],
         ),
       ),
     );
   }
 
-  Widget profileItem(IconData icon, String title,
-      {Color color = Colors.green}) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 20),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Row(
-        children: [
-          Icon(icon, color: color),
-          const SizedBox(width: 12),
-          Text(
-            title,
-            style: TextStyle(
+  Widget profileItem(
+      IconData icon,
+      String title, {
+        Color color = Colors.green,
+        VoidCallback? onTap,
+      }) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(16),
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          children: [
+            Icon(icon, color: color),
+            const SizedBox(width: 12),
+            Text(
+              title,
+              style: TextStyle(
                 fontWeight: FontWeight.w600,
-                color: title == "Log Out" ? Colors.red : Colors.black),
-          ),
-        ],
+                color: title == "Log Out" ? Colors.red : Colors.black,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
