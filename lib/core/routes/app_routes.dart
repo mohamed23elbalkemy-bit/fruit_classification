@@ -5,7 +5,6 @@ import 'package:fruit_classification/ui/screens/auth/register_screen.dart';
 import 'package:fruit_classification/ui/screens/camera/camera_screen.dart';
 import 'package:fruit_classification/ui/screens/history/history_screen.dart';
 import 'package:fruit_classification/ui/screens/profile/profile_screen.dart';
-import 'package:fruit_classification/ui/screens/result/result_screen.dart';
 import 'package:fruit_classification/ui/screens/settings/settings_screen.dart';
 import 'package:fruit_classification/ui/screens/splash/splash_screen.dart';
 import 'package:fruit_classification/ui/screens/upload/upload_screen.dart';
@@ -52,12 +51,9 @@ abstract final class AppRoutes {
   }
 
   static MaterialPageRoute get uploadImageScreen  {
-    return MaterialPageRoute(builder: (_) => const UploadImageScreen());
+    return MaterialPageRoute(builder: (_) => const UploadScreen());
   }
 
-  static MaterialPageRoute get resultScreen  {
-    return MaterialPageRoute(builder: (_) => const ResultScreen());
-  }
 
   static MaterialPageRoute get aboutAppScreen  {
     return MaterialPageRoute(builder: (_) => const AboutAppScreen());

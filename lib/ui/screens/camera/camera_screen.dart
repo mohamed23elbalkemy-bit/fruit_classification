@@ -2,7 +2,11 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../../core/routes/app_routes.dart';
+
+import '../result/model/fruit_result_model.dart';
+import '../result/result_screen.dart';
+
+
 
 class CameraScreen extends StatefulWidget {
   const CameraScreen({super.key});
@@ -18,7 +22,6 @@ class _CameraScreenState extends State<CameraScreen> {
   bool _isCapturing = false;
 
   XFile? _capturedImage;
-
   final ImagePicker _picker = ImagePicker();
 
   @override
@@ -29,10 +32,8 @@ class _CameraScreenState extends State<CameraScreen> {
 
   Future<void> _initCamera() async {
     final cameras = await availableCameras();
-    final camera = cameras.first;
-
     _controller = CameraController(
-      camera,
+      cameras.first,
       ResolutionPreset.high,
       enableAudio: false,
     );
@@ -40,42 +41,32 @@ class _CameraScreenState extends State<CameraScreen> {
     await _controller.initialize();
 
     if (!mounted) return;
-    setState(() {
-      _isInitialized = true;
-    });
+    setState(() => _isInitialized = true);
   }
 
-  /// 📸 Capture Image
   Future<void> _captureImage() async {
     if (!_controller.value.isInitialized || _isCapturing) return;
 
     setState(() => _isCapturing = true);
 
-    _capturedImage = await _controller.takePicture();
+    final image = await _controller.takePicture();
 
-    // freeze preview
-    await Future.delayed(const Duration(milliseconds: 800));
+    final result = FruitResult(
+      imagePath: image.path,
+      name: "Apple",
+      grade: "First Grade",
+      accuracy: 0.94,
+      dateTime: DateTime.now(),
+    );
 
     Navigator.pushReplacement(
       context,
-      AppRoutes.resultScreen,
+      MaterialPageRoute(
+        builder: (_) => ResultScreen(result: result),
+      ),
     );
   }
 
-  /// 🔦 Flash Toggle
-  Future<void> _toggleFlash() async {
-    if (!_controller.value.isInitialized) return;
-
-    _isFlashOn = !_isFlashOn;
-
-    await _controller.setFlashMode(
-      _isFlashOn ? FlashMode.torch : FlashMode.off,
-    );
-
-    setState(() {});
-  }
-
-  /// 🖼 Open Gallery
   Future<void> _openGallery() async {
     try {
       final XFile? image =
@@ -83,13 +74,34 @@ class _CameraScreenState extends State<CameraScreen> {
 
       if (image == null) return;
 
+      final result = FruitResult(
+        imagePath: image.path,
+        name: "Banana",
+        grade: "Second Grade",
+        accuracy: 0.82,
+        dateTime: DateTime.now(),
+      );
+
       Navigator.pushReplacement(
         context,
-        AppRoutes.resultScreen,
+        MaterialPageRoute(
+          builder: (_) => ResultScreen(result: result),
+        ),
       );
     } catch (e) {
       debugPrint("Gallery error: $e");
     }
+  }
+
+
+  Future<void> _toggleFlash() async {
+    if (!_controller.value.isInitialized) return;
+
+    _isFlashOn = !_isFlashOn;
+    await _controller.setFlashMode(
+      _isFlashOn ? FlashMode.torch : FlashMode.off,
+    );
+    setState(() {});
   }
 
   @override
@@ -104,30 +116,14 @@ class _CameraScreenState extends State<CameraScreen> {
       backgroundColor: Colors.black,
       body: Stack(
         children: [
-
-          /// CAMERA / FREEZE IMAGE
           Positioned.fill(
-            child: _capturedImage != null
-                ? Image.file(
-              File(_capturedImage!.path),
-              fit: BoxFit.cover,
-            )
-                : _isInitialized
+            child: _isInitialized
                 ? CameraPreview(_controller)
                 : const Center(
-              child:
-              CircularProgressIndicator(color: Colors.white),
+              child: CircularProgressIndicator(color: Colors.white),
             ),
           ),
 
-          /// GRID
-          Positioned.fill(
-            child: IgnorePointer(
-              child: CustomPaint(painter: _GridPainter()),
-            ),
-          ),
-
-          /// ❌ CLOSE
           Positioned(
             top: 40,
             left: 20,
@@ -136,7 +132,6 @@ class _CameraScreenState extends State<CameraScreen> {
             }),
           ),
 
-          /// 🔦 FLASH
           Positioned(
             top: 40,
             right: 80,
@@ -146,7 +141,6 @@ class _CameraScreenState extends State<CameraScreen> {
             ),
           ),
 
-          /// 📸 CONTROLS
           Positioned(
             bottom: 40,
             left: 0,
@@ -154,11 +148,8 @@ class _CameraScreenState extends State<CameraScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-
-                /// 🖼 GALLERY
                 _circleIcon(Icons.photo_library, _openGallery),
 
-                /// CAPTURE
                 GestureDetector(
                   onTap: _captureImage,
                   child: Container(
@@ -171,7 +162,7 @@ class _CameraScreenState extends State<CameraScreen> {
                   ),
                 ),
 
-                const SizedBox(width: 48), // balance
+                const SizedBox(width: 48),
               ],
             ),
           ),
@@ -193,29 +184,4 @@ class _CameraScreenState extends State<CameraScreen> {
       ),
     );
   }
-}
-
-class _GridPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.white24
-      ..strokeWidth = 1;
-
-    for (int i = 1; i < 3; i++) {
-      canvas.drawLine(
-        Offset(size.width * i / 3, 0),
-        Offset(size.width * i / 3, size.height),
-        paint,
-      );
-      canvas.drawLine(
-        Offset(0, size.height * i / 3),
-        Offset(size.width, size.height * i / 3),
-        paint,
-      );
-    }
-  }
-
-  @override
-  bool shouldRepaint(_) => false;
 }

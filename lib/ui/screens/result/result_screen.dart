@@ -1,7 +1,15 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import '../../../core/routes/app_routes.dart';
+import '../history/data/history_storage.dart';
+import 'model/fruit_result_model.dart';
+
+
 
 class ResultScreen extends StatelessWidget {
-  const ResultScreen({super.key});
+  final FruitResult result;
+
+  const ResultScreen({super.key, required this.result});
 
   @override
   Widget build(BuildContext context) {
@@ -9,7 +17,7 @@ class ResultScreen extends StatelessWidget {
       backgroundColor: const Color(0xFFF3FFF6),
 
       appBar: AppBar(
-        backgroundColor: Color(0xFFF3FFF6),
+        backgroundColor: const Color(0xFFF3FFF6),
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.green),
@@ -50,8 +58,8 @@ class ResultScreen extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: Image.asset(
-                  "assets/images/apple_image.jpg",
+                child: Image.file(
+                  File(result.imagePath),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -59,9 +67,9 @@ class ResultScreen extends StatelessWidget {
 
             const SizedBox(height: 30),
 
-            const Text(
-              "Apple",
-              style: TextStyle(
+            Text(
+              result.name,
+              style: const TextStyle(
                 color: Colors.green,
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -70,9 +78,12 @@ class ResultScreen extends StatelessWidget {
 
             const SizedBox(height: 6),
 
-            const Text(
-              "Quality: First Grade",
-              style: TextStyle(color: Colors.green, fontWeight:FontWeight.bold),
+            Text(
+              "Quality: ${result.grade}",
+              style: const TextStyle(
+                color: Colors.green,
+                fontWeight: FontWeight.bold,
+              ),
             ),
 
             const SizedBox(height: 40),
@@ -80,9 +91,21 @@ class ResultScreen extends StatelessWidget {
             /// ACCURACY
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("Accuracy",style: TextStyle(color: Colors.green,fontWeight:FontWeight.bold),),
-                Text("94.5%",style: TextStyle(color: Colors.green,fontWeight:FontWeight.bold)),
+              children: [
+                const Text(
+                  "Accuracy",
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  "${(result.accuracy * 100).toStringAsFixed(1)}%",
+                  style: const TextStyle(
+                    color: Colors.green,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ],
             ),
 
@@ -91,7 +114,7 @@ class ResultScreen extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: LinearProgressIndicator(
-                value: 0.945,
+                value: result.accuracy,
                 minHeight: 10,
                 backgroundColor: Colors.green.withOpacity(0.2),
                 valueColor:
@@ -101,7 +124,7 @@ class ResultScreen extends StatelessWidget {
 
             const SizedBox(height: 50),
 
-            /// BUTTONS
+            /// Scan Again
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -112,20 +135,33 @@ class ResultScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(14),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    AppRoutes.cameraScreen,
+                  );
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.refresh,color: Colors.white,),
-                    SizedBox(width: 4,),
-                    const Text("Scan Again",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+                  children: const [
+                    Icon(Icons.refresh, color: Colors.white),
+                    SizedBox(width: 6),
+                    Text(
+                      "Scan Again",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
 
+
             const SizedBox(height: 20),
 
+            /// Save to History
             SizedBox(
               width: double.infinity,
               child: OutlinedButton(
@@ -136,10 +172,16 @@ class ResultScreen extends StatelessWidget {
                   ),
                   side: const BorderSide(color: Colors.green),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  HistoryStorage.add(result);
+                  Navigator.pop(context);
+                },
                 child: const Text(
                   "Save to History",
-                  style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),

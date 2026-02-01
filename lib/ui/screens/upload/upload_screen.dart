@@ -1,7 +1,39 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
-class UploadImageScreen extends StatelessWidget {
-  const UploadImageScreen({super.key});
+import '../result/model/fruit_result_model.dart';
+import '../result/result_screen.dart';
+class UploadScreen extends StatelessWidget {
+  const UploadScreen({super.key});
+
+  Future<void> _pickImage(BuildContext context) async {
+    final ImagePicker picker = ImagePicker();
+
+    try {
+      final XFile? image =
+      await picker.pickImage(source: ImageSource.gallery);
+
+      if (image == null) return;
+
+      final result = FruitResult(
+        imagePath: image.path,
+        name: "Orange", // Dummy دلوقتي
+        grade: "First Grade",
+        accuracy: 0.91,
+        dateTime: DateTime.now(),
+      );
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) => ResultScreen(result: result),
+        ),
+      );
+    } catch (e) {
+      debugPrint("Upload image error: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -9,7 +41,7 @@ class UploadImageScreen extends StatelessWidget {
       backgroundColor: const Color(0xFFF3FFF6),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Color(0xFFF3FFF6),
+        backgroundColor: const Color(0xFFF3FFF6),
         leading: IconButton(
           icon: const Icon(Icons.close, color: Colors.green),
           onPressed: () => Navigator.pop(context),
@@ -18,15 +50,12 @@ class UploadImageScreen extends StatelessWidget {
           "Upload Fruit Image",
           style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
         ),
-
       ),
-
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
@@ -34,7 +63,6 @@ class UploadImageScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
                   color: Colors.green.withOpacity(0.4),
-                  style: BorderStyle.solid,
                 ),
               ),
               child: Column(
@@ -43,60 +71,58 @@ class UploadImageScreen extends StatelessWidget {
                   CircleAvatar(
                     radius: 30,
                     backgroundColor: Colors.green.withOpacity(0.15),
-                    child: const Icon(Icons.upload, color: Colors.green, size: 30),
+                    child: const Icon(Icons.upload,
+                        color: Colors.green, size: 30),
                   ),
                   const SizedBox(height: 25),
-
                   const Text(
                     "Drop your image here",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-
                   const SizedBox(height: 10),
-
                   const Text(
                     "or click the button below to browse",
                     style: TextStyle(color: Colors.grey),
                   ),
-
                   const SizedBox(height: 26),
-
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green,
-                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        padding:
+                        const EdgeInsets.symmetric(vertical: 14),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () => _pickImage(context),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.photo_size_select_actual_outlined,color: Colors.white,),
-                          SizedBox(width: 6,),
-                          const Text("Choose from Gallery",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+                        children: const [
+                          Icon(Icons.photo_size_select_actual_outlined,
+                              color: Colors.white),
+                          SizedBox(width: 6),
+                          Text(
+                            "Choose from Gallery",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ],
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 26),
-
                   const Text(
                     "Supports: JPG, PNG, WEBP",
-                    style: TextStyle(color: Colors.grey, fontSize: 12,),
+                    style: TextStyle(
+                        color: Colors.grey, fontSize: 12),
                   ),
-                  SizedBox(height: 18,)
                 ],
               ),
             ),
-
             const SizedBox(height: 35),
-
-            /// TIPS
             const Text(
               "Tips for best results",
               style: TextStyle(
@@ -104,15 +130,10 @@ class UploadImageScreen extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
-
             const SizedBox(height: 16),
-
             const Tip("Use clear, well-lit photos of the fruit"),
-            const SizedBox(height: 4),
             const Tip("Center the fruit in the frame"),
-            const SizedBox(height: 4),
             const Tip("Avoid blurry or dark images"),
-            const SizedBox(height: 4),
             const Tip("Show the full fruit without obstructions"),
           ],
         ),
@@ -123,7 +144,7 @@ class UploadImageScreen extends StatelessWidget {
 
 class Tip extends StatelessWidget {
   final String text;
-  const Tip(this.text);
+  const Tip(this.text, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +152,8 @@ class Tip extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 6),
       child: Row(
         children: [
-          const Icon(Icons.check_circle, color: Colors.green, size: 18),
+          const Icon(Icons.check_circle,
+              color: Colors.green, size: 18),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
