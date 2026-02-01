@@ -76,7 +76,7 @@ class LoginScreen extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              AuthButton(text: 'Login'),
+              AuthButton(text: 'Login',),
 
               const SizedBox(height: 30),
 

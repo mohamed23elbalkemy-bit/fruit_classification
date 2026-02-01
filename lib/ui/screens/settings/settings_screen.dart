@@ -16,11 +16,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF3FFF6),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xFFF3FFF6),
         elevation: 0,
-        title: const Text(
-          "Settings",
-          style: TextStyle(color: Colors.black),
+        title: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Text(
+              "Settings",
+              style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 6,),
+            Text(
+              "Manage your app preferences",
+              style: TextStyle(color: Colors.grey, fontSize: 16),
+            ),
+          ],
         ),
         iconTheme: const IconThemeData(color: Colors.black),
       ),
@@ -53,9 +64,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       },
                     ),
                   ),
-
+                  SizedBox(height: 16,),
                   const Divider(),
-
+                  SizedBox(height: 16,),
                   /// DARK MODE
                   _settingTile(
                     icon: Icons.dark_mode_outlined,
@@ -69,9 +80,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       },
                     ),
                   ),
-
+                  SizedBox(height: 16,),
                   const Divider(),
-
+                  SizedBox(height: 16,),
                   /// LANGUAGE
                   _settingTile(
                     icon: Icons.language,

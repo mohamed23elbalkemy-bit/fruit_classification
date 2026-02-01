@@ -2,7 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fruit_classification/ui/screens/profile/storage/user_storage.dart';
 import 'package:fruit_classification/ui/screens/history/history_screen.dart';
+import '../auth/login_screen.dart';
 import 'editProfile/edit_profile_screen.dart';
+import 'package:fruit_classification/ui/screens/settings/settings_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -12,6 +14,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+
   @override
   Widget build(BuildContext context) {
     final user = UserStorage.currentUser;
@@ -93,11 +96,73 @@ class _ProfileScreenState extends State<ProfileScreen> {
               },
             ),
 
-            profileItem(Icons.settings, "Settings"),
-            profileItem(Icons.logout, "Log Out", color: Colors.redAccent),
+            profileItem(
+              Icons.settings,
+              "Settings",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const SettingsScreen(),
+                  ),
+                );
+              },
+            ),
+
+            profileItem(
+              Icons.logout,
+              "Log Out",
+              color: Colors.redAccent,
+              onTap: () {
+                showLogoutDialog(context);
+              },
+            ),
+
+
           ],
         ),
       ),
+    );
+  }
+  void showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFFF3FFF6),
+        title: const Text("Log Out",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold)),
+        content: const Text("Are you sure you want to log out?"),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("Cancel",style: TextStyle(color: Colors.black)),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.redAccent,
+            ),
+            onPressed: () {
+              logout(context);
+            },
+            child: const Text("Log Out",style: TextStyle(color: Colors.black)),
+          ),
+        ],
+      ),
+    );
+  }
+  void logout(BuildContext context) {
+    /// هنا بعدين هتتحول Firebase SignOut
+    UserStorage.update(
+      UserStorage.currentUser.copyWith(
+        name: "",
+        email: "",
+        imagePath: "assets/images/profile_image.jpg",
+      ),
+    );
+
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (_) => const LoginScreen()),
+          (route) => false,
     );
   }
 
