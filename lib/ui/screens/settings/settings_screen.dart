@@ -33,7 +33,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ],
         ),
-        iconTheme: const IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.green),
       ),
 
       body: Padding(

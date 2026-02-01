@@ -4,6 +4,7 @@ import 'package:fruit_classification/ui/screens/auth/login_screen.dart';
 import 'package:fruit_classification/ui/screens/auth/register_screen.dart';
 import 'package:fruit_classification/ui/screens/camera/camera_screen.dart';
 import 'package:fruit_classification/ui/screens/history/history_screen.dart';
+import 'package:fruit_classification/ui/screens/home/home_screen.dart';
 import 'package:fruit_classification/ui/screens/profile/profile_screen.dart';
 import 'package:fruit_classification/ui/screens/settings/settings_screen.dart';
 import 'package:fruit_classification/ui/screens/splash/splash_screen.dart';
@@ -36,6 +37,10 @@ abstract final class AppRoutes {
 
   static MaterialPageRoute get registerScreen {
     return MaterialPageRoute(builder: (_) => const RegisterScreen());
+  }
+
+  static MaterialPageRoute get homeScreen {
+    return MaterialPageRoute(builder: (_) => const HomeScreen());
   }
 
   static MaterialPageRoute get historyScreen {

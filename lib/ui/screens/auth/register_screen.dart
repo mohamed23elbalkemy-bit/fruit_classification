@@ -77,7 +77,16 @@ class RegisterScreen extends StatelessWidget {
 
               const SizedBox(height: 26),
 
-              AuthButton(text: 'Create Account'),
+              AuthButton(
+                text: 'Create Account',
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    AppRoutes.homeScreen,
+                  );
+                },
+              ),
+
 
               const SizedBox(height: 30),
 

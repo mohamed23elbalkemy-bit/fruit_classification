@@ -76,7 +76,16 @@ class LoginScreen extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              AuthButton(text: 'Login',),
+              AuthButton(
+                text: 'Login',
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    AppRoutes.homeScreen,
+                  );
+                },
+              ),
+
 
               const SizedBox(height: 30),
 
