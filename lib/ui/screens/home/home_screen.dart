@@ -2,10 +2,29 @@ import 'package:flutter/material.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../../core/widgets/mainActionButton.dart';
 import '../../../core/widgets/recentItem.dart';
+import '../history/data/history_storage.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  /// 🔁 Open screen + refresh when coming back
+  Future<void> _openScreen(Route route) async {
+    await Navigator.push(context, route);
+    setState(() {}); // 🔥 rebuild HomeScreen
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    /// 🔥 always take latest 3 items
+    final recent = HistoryStorage.history.take(3).toList();
+
     return Scaffold(
       backgroundColor: const Color(0xFFF3FFF6),
 
@@ -43,63 +62,51 @@ class HomeScreen extends StatelessWidget {
 
             const Text(
               "Classify Your Fruit",
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
 
             const SizedBox(height: 6),
 
             const Text(
               "Take a photo or upload an image to identify any fruit",
-              style: TextStyle(
-                color: Colors.black54,
-                fontSize: 14,
-              ),
+              style: TextStyle(color: Colors.black54),
             ),
 
             const SizedBox(height: 25),
 
-            /// 📷 Open Camera
+            /// 📷 CAMERA
             MainActionButton(
               icon: Icons.camera_alt,
               title: "Open Camera",
               subtitle: "Take a photo",
               isPrimary: true,
               onTap: () {
-                Navigator.push(context, AppRoutes.cameraScreen);
+                _openScreen(AppRoutes.cameraScreen);
               },
             ),
 
             const SizedBox(height: 15),
 
-            /// 🖼 Upload Image
+            /// 🖼️ UPLOAD
             MainActionButton(
               icon: Icons.image_outlined,
               title: "Upload Image",
               subtitle: "From gallery",
               isPrimary: false,
               onTap: () {
-                Navigator.push(context, AppRoutes.uploadImageScreen);
+                _openScreen(AppRoutes.uploadImageScreen);
               },
             ),
 
             const SizedBox(height: 30),
 
-            /// 🔥 Recent Header
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-
                 const Text(
                   "Recent Classifications",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-
                 GestureDetector(
                   onTap: () {
                     Navigator.push(context, AppRoutes.historyScreen);
@@ -117,26 +124,28 @@ class HomeScreen extends StatelessWidget {
 
             const SizedBox(height: 15),
 
-            const RecentItem(
-              image: "assets/images/apple_image.jpg",
-              title: "Red Apple",
-              confidence: "98%",
-              time: "2 mins ago",
-            ),
-            const SizedBox(height: 10),
-            const RecentItem(
-              image: "assets/images/orange_image.jpg",
-              title: "Orange",
-              confidence: "95%",
-              time: "15 mins ago",
-            ),
-            const SizedBox(height: 10),
-            const RecentItem(
-              image: "assets/images/banana_image.jpg",
-              title: "Banana",
-              confidence: "99%",
-              time: "1 hour ago",
-            ),
+            /// 🔥 RECENT LIST
+            if (recent.isEmpty)
+              const Text(
+                "No recent classifications yet",
+                style: TextStyle(color: Colors.black54),
+              )
+            else
+              Column(
+                children: recent.map((item) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: RecentItem(
+                      image: item.imagePath,
+                      title: item.name,
+                      confidence:
+                      "${(item.accuracy * 100).toStringAsFixed(1)}%",
+                      time:
+                      "${item.dateTime.hour}:${item.dateTime.minute.toString().padLeft(2, '0')}",
+                    ),
+                  );
+                }).toList(),
+              ),
           ],
         ),
       ),

@@ -4,8 +4,6 @@ import '../../../core/routes/app_routes.dart';
 import '../history/data/history_storage.dart';
 import 'model/fruit_result_model.dart';
 
-
-
 class ResultScreen extends StatelessWidget {
   final FruitResult result;
 
@@ -158,10 +156,9 @@ class ResultScreen extends StatelessWidget {
               ),
             ),
 
-
             const SizedBox(height: 20),
 
-            /// Save to History
+            /// SAVE TO HISTORY (يدوي فقط 👌)
             SizedBox(
               width: double.infinity,
               child: OutlinedButton(
@@ -174,7 +171,7 @@ class ResultScreen extends StatelessWidget {
                 ),
                 onPressed: () {
                   HistoryStorage.add(result);
-                  Navigator.pop(context);
+                  Navigator.pop(context); // يرجع للهوم ويتحدّث
                 },
                 child: const Text(
                   "Save to History",
