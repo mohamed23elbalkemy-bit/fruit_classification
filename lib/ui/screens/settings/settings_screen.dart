@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fruit_classification/ui/screens/about/about_app_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -19,14 +20,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
         backgroundColor: const Color(0xFFF3FFF6),
         elevation: 0,
         title: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Text(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            Text(
               "Settings",
               style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 6,),
+            SizedBox(height: 6),
             Text(
               "Manage your app preferences",
               style: TextStyle(color: Colors.grey, fontSize: 16),
@@ -64,9 +64,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       },
                     ),
                   ),
-                  SizedBox(height: 16,),
+
+                  const SizedBox(height: 16),
                   const Divider(),
-                  SizedBox(height: 16,),
+                  const SizedBox(height: 16),
+
                   /// DARK MODE
                   _settingTile(
                     icon: Icons.dark_mode_outlined,
@@ -80,15 +82,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       },
                     ),
                   ),
-                  SizedBox(height: 16,),
+
+                  const SizedBox(height: 16),
                   const Divider(),
-                  SizedBox(height: 16,),
+                  const SizedBox(height: 16),
+
                   /// LANGUAGE
                   _settingTile(
                     icon: Icons.language,
                     title: "Language",
                     subtitle: "English",
                     trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                  ),
+
+                  const SizedBox(height: 16),
+                  const Divider(),
+                  const SizedBox(height: 16),
+
+                  /// ABOUT APP 🔥 (CONNECTED)
+                  _settingTile(
+                    icon: Icons.info_outline,
+                    title: "About App",
+                    subtitle: "App information & details",
+                    trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const AboutAppScreen(),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -111,16 +135,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
     required String title,
     required String subtitle,
     Widget? trailing,
+    VoidCallback? onTap,
   }) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      leading: CircleAvatar(
-        backgroundColor: Colors.green.withOpacity(0.1),
-        child: Icon(icon, color: Colors.green),
+    return InkWell(
+      onTap: onTap,
+      child: ListTile(
+        contentPadding: EdgeInsets.zero,
+        leading: CircleAvatar(
+          backgroundColor: Colors.green.withOpacity(0.1),
+          child: Icon(icon, color: Colors.green),
+        ),
+        title: Text(
+          title,
+          style: const TextStyle(fontWeight: FontWeight.w600),
+        ),
+        subtitle: Text(subtitle),
+        trailing: trailing,
       ),
-      title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
-      subtitle: Text(subtitle),
-      trailing: trailing,
     );
   }
 }
