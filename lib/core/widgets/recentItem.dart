@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 
 class RecentItem extends StatelessWidget {
@@ -27,13 +28,14 @@ class RecentItem extends StatelessWidget {
           /// IMAGE
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
-            child: Image.asset(
-              image,
-              width: 60,
-              height: 60,
+            child: Image.file(
+              File(image),
+              width: 55,
+              height: 55,
               fit: BoxFit.cover,
             ),
           ),
+
 
           const SizedBox(width: 14),
 
