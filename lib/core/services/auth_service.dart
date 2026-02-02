@@ -1,25 +1,28 @@
 class AuthService {
-  /// login (mock)
+  // ================= LOGIN =================
   static Future<bool> login({
     required String email,
     required String password,
   }) async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(milliseconds: 800));
 
-    // MOCK LOGIN
-    if (email == 'test@test.com' && password == '12345678') {
-      return true;
-    }
-    return false;
+    return true;
   }
 
-  /// register (mock)
+  // ================= REGISTER =================
   static Future<bool> register({
     required String username,
     required String email,
     required String password,
   }) async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(milliseconds: 800));
+
+    return true;
+  }
+
+  // ================= FORGOT PASSWORD =================
+  static Future<bool> forgotPassword(String email) async {
+    await Future.delayed(const Duration(milliseconds: 800));
     return true;
   }
 }
