@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: const Color(0xFFF3FFF6),
 
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFFF3FFF6),
         automaticallyImplyLeading: false,
         elevation: 0,
         title: Row(

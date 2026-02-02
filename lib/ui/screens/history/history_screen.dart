@@ -29,11 +29,46 @@ class _HistoryScreenState extends State<HistoryScreen> {
           if (HistoryStorage.history.isNotEmpty)
             IconButton(
               icon: const Icon(Icons.delete_outline, color: Colors.red),
-              onPressed: () {
-                setState(() {
-                  HistoryStorage.clear();
-                });
+              onPressed: () async {
+                final confirmed = await showDialog<bool>(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text("Delete all history?"),
+                      content: const Text(
+                        "This action cannot be undone. Are you sure you want to delete all classifications?",
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context, false);
+                          },
+                          child: const Text(
+                            "Cancel",
+                            style:  TextStyle(color: Colors.black,),
+                          ),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context, true);
+                          },
+                          child: const Text("Delete",style: TextStyle(color: Colors.black,)),
+                        ),
+                      ],
+                    );
+                  },
+                );
+
+                if (confirmed == true) {
+                  setState(() {
+                    HistoryStorage.clear();
+                  });
+                }
               },
+
             ),
         ],
       ),
@@ -85,7 +120,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     );
   }
 
-  /// 👇👇👇 لازم تكون هنا 👇👇👇
+
   Widget _historyItem({
     required String image,
     required String name,
