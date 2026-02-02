@@ -9,124 +9,125 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: const Color(0xFFE1F8E5),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            children: [
-              const SizedBox(height: 50),
+        child: SingleChildScrollView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              children: [
+                const SizedBox(height: 50),
 
-
-              Container(
-                width: 56,
-                height: 56,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFE9F8EE),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(Icons.apple,
-                    color: Color(0xFF34A853), size: 28),
-              ),
-
-              const SizedBox(height: 30),
-
-              const Text(
-                'Welcome Back',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
-              ),
-
-              const SizedBox(height: 6),
-
-              const Text(
-                'Sign in to continue classifying fruits',
-                style: TextStyle(color: Colors.grey, fontSize: 14),
-              ),
-
-              const SizedBox(height: 40),
-
-              /// EMAIL
-              AuthField(
-                hint: 'Enter your email',
-                icon: Icons.email_outlined,
-              ),
-
-              const SizedBox(height: 18),
-
-
-              AuthField(
-                hint: 'Enter your password',
-                icon: Icons.lock_outline,
-                isPassword: true,
-              ),
-
-              const SizedBox(height: 10),
-
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'Forgot password?',
-                    style: TextStyle(
-                        color: Color(0xFF34A853), fontSize: 13),
+                Container(
+                  width: 56,
+                  height: 56,
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFE9F8EE),
+                    shape: BoxShape.circle,
                   ),
+                  child: const Icon(Icons.apple,
+                      color: Color(0xFF34A853), size: 28),
                 ),
-              ),
 
-              const SizedBox(height: 20),
+                const SizedBox(height: 30),
 
-              AuthButton(
-                text: 'Login',
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    AppRoutes.homeScreen,
-                  );
-                },
-              ),
+                const Text(
+                  'Welcome Back',
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+                ),
 
+                const SizedBox(height: 6),
 
-              const SizedBox(height: 30),
+                const Text(
+                  'Sign in to continue classifying fruits',
+                  style: TextStyle(color: Colors.grey, fontSize: 14),
+                ),
 
-              const Text('or', style: TextStyle(color: Colors.grey)),
+                const SizedBox(height: 40),
 
-              const SizedBox(height: 30),
+                AuthField(
+                  hint: 'Enter your email',
+                  icon: Icons.email_outlined,
+                ),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Don’t have an account? ',
-                      style: TextStyle(fontSize: 13)),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(context, AppRoutes.registerScreen);
-                    },
+                const SizedBox(height: 18),
+
+                AuthField(
+                  hint: 'Enter your password',
+                  icon: Icons.lock_outline,
+                  isPassword: true,
+                ),
+
+                const SizedBox(height: 10),
+
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () {},
                     child: const Text(
-                      'Create an account',
+                      'Forgot password?',
                       style: TextStyle(
-                        color: Color(0xFF34A853),
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                      ),
+                          color: Color(0xFF34A853), fontSize: 13),
                     ),
                   ),
-                ],
-              ),
+                ),
 
-              const Spacer(),
+                const SizedBox(height: 20),
 
-              const Text(
-                'By continuing, you agree to our Terms & Privacy Policy',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 11, color: Colors.grey),
-              ),
+                AuthButton(
+                  text: 'Login',
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      AppRoutes.homeScreen,
+                    );
+                  },
+                ),
 
-              const SizedBox(height: 16),
-            ],
+                const SizedBox(height: 30),
+
+                const Text('or', style: TextStyle(color: Colors.grey)),
+
+                const SizedBox(height: 30),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Don’t have an account? ',
+                        style: TextStyle(fontSize: 13)),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, AppRoutes.registerScreen);
+                      },
+                      child: const Text(
+                        'Create an account',
+                        style: TextStyle(
+                          color: Color(0xFF34A853),
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 30),
+
+                const Text(
+                  'By continuing, you agree to our Terms & Privacy Policy',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 11, color: Colors.grey),
+                ),
+
+                const SizedBox(height: 16),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
+
