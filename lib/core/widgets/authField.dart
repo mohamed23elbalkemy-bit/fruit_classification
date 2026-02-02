@@ -1,14 +1,19 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 class AuthField extends StatefulWidget {
   final String hint;
   final IconData icon;
   final bool isPassword;
+  final TextEditingController? controller;
+  final String? Function(String?)? validator;
 
   const AuthField({
+    super.key,
     required this.hint,
     required this.icon,
     this.isPassword = false,
+    this.controller,
+    this.validator,
   });
 
   @override
@@ -20,38 +25,29 @@ class _AuthFieldState extends State<AuthField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      controller: widget.controller,
+      validator: widget.validator,
       obscureText: widget.isPassword ? _obscureText : false,
       decoration: InputDecoration(
         hintText: widget.hint,
-        hintStyle: const TextStyle(fontSize: 13),
-
-
-        prefixIcon: Icon(
-          widget.icon,
-          color: const Color(0xFF34A853),
-        ),
-
-        /// EYE ICON (RIGHT)
+        prefixIcon: Icon(widget.icon),
         suffixIcon: widget.isPassword
             ? IconButton(
+          icon: Icon(
+            _obscureText
+                ? Icons.visibility_off_outlined
+                : Icons.visibility_outlined,
+          ),
           onPressed: () {
             setState(() {
               _obscureText = !_obscureText;
             });
           },
-          icon: Icon(
-            _obscureText
-                ? Icons.visibility_off_outlined
-                : Icons.visibility_outlined,
-            color: Colors.green,
-          ),
         )
             : null,
-
         filled: true,
-        fillColor: const Color(0xFFE9F8EE),
-        contentPadding: const EdgeInsets.symmetric(vertical: 16),
+        fillColor: Colors.white,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
           borderSide: BorderSide.none,
