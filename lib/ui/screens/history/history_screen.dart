@@ -4,8 +4,14 @@ import 'package:flutter/material.dart';
 import 'data/history_storage.dart';
 
 
-class HistoryScreen extends StatelessWidget {
+class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
+
+  @override
+  State<HistoryScreen> createState() => _HistoryScreenState();
+}
+
+class _HistoryScreenState extends State<HistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
@@ -19,29 +25,67 @@ class HistoryScreen extends StatelessWidget {
           style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
         ),
         iconTheme: const IconThemeData(color: Colors.green),
+        actions: [
+          if (HistoryStorage.history.isNotEmpty)
+            IconButton(
+              icon: const Icon(Icons.delete_outline, color: Colors.red),
+              onPressed: () {
+                setState(() {
+                  HistoryStorage.clear();
+                });
+              },
+            ),
+        ],
       ),
-      body: ListView.builder(
+
+      body: HistoryStorage.history.isEmpty
+          ? const Center(
+        child: Text(
+          "No history yet",
+          style: TextStyle(color: Colors.black54),
+        ),
+      )
+          : ListView.builder(
         padding: const EdgeInsets.all(16),
         itemCount: HistoryStorage.history.length,
         itemBuilder: (context, index) {
           final item = HistoryStorage.history[index];
 
-          return _historyItem(
-            image: item.imagePath,
-            name: item.name,
-            grade: item.grade,
-            gradeColor:
-            item.grade == "First Grade" ? Colors.green : Colors.orange,
-            date:
-            "${item.dateTime.day}/${item.dateTime.month}/${item.dateTime.year}",
-            time:
-            "${item.dateTime.hour}:${item.dateTime.minute.toString().padLeft(2, '0')}",
+          return Dismissible(
+            key: ValueKey(item.dateTime.toString()),
+            direction: DismissDirection.endToStart,
+            background: Container(
+              alignment: Alignment.centerRight,
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                color: Colors.red.withOpacity(0.15),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: const Icon(Icons.delete, color: Colors.red),
+            ),
+            onDismissed: (_) {
+              setState(() {
+                HistoryStorage.removeAt(index);
+              });
+            },
+            child: _historyItem(
+              image: item.imagePath,
+              name: item.name,
+              grade: item.grade,
+              gradeColor:
+              item.grade == "First Grade" ? Colors.green : Colors.orange,
+              date:
+              "${item.dateTime.day}/${item.dateTime.month}/${item.dateTime.year}",
+              time:
+              "${item.dateTime.hour}:${item.dateTime.minute.toString().padLeft(2, '0')}",
+            ),
           );
         },
       ),
     );
   }
 
+  /// 👇👇👇 لازم تكون هنا 👇👇👇
   Widget _historyItem({
     required String image,
     required String name,
@@ -81,8 +125,8 @@ class HistoryScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Container(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
                     color: gradeColor.withOpacity(0.15),
                     borderRadius: BorderRadius.circular(20),
@@ -116,3 +160,5 @@ class HistoryScreen extends StatelessWidget {
     );
   }
 }
+
+

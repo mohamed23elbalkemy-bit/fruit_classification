@@ -12,8 +12,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-
   Future<void> _openScreen(Route route) async {
     await Navigator.push(context, route);
     setState(() {});
@@ -30,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       appBar: AppBar(
         backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
         elevation: 0,
         title: Row(
           children: const [
