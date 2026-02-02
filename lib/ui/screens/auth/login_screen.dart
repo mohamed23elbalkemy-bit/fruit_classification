@@ -53,7 +53,7 @@ class LoginScreen extends StatelessWidget {
 
               const SizedBox(height: 18),
 
-              /// PASSWORD
+
               AuthField(
                 hint: 'Enter your password',
                 icon: Icons.lock_outline,

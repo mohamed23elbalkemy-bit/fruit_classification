@@ -39,7 +39,6 @@ class RecentItem extends StatelessWidget {
 
           const SizedBox(width: 14),
 
-          /// TEXTS (IMPORTANT FIX 🔥)
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,7 +72,6 @@ class RecentItem extends StatelessWidget {
 
           const SizedBox(width: 10),
 
-          /// CHECK ICON
           const Icon(
             Icons.check_circle,
             color: Color(0xFF4CAF50),

@@ -56,7 +56,7 @@ class AboutAppScreen extends StatelessWidget {
 
                   const SizedBox(height: 6),
 
-                  // Subtitle
+
                   Text(
                     'AI-Powered Quality Detection',
                     style: TextStyle(
@@ -67,7 +67,7 @@ class AboutAppScreen extends StatelessWidget {
 
                   const SizedBox(height: 40),
 
-                  // Description
+
                   Text(
                     'Our advanced AI technology helps you classify fruits '
                         'and assess their quality with high accuracy. '
@@ -83,7 +83,7 @@ class AboutAppScreen extends StatelessWidget {
 
                   const SizedBox(height: 30),
 
-                  // Version
+
                   Text(
                     'Version 1.0.0',
                     style: TextStyle(
@@ -128,7 +128,6 @@ class AboutAppScreen extends StatelessWidget {
 
                   const SizedBox(height: 45),
 
-                  // Stats
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [

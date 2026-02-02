@@ -13,16 +13,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  /// 🔁 Open screen + refresh when coming back
+
   Future<void> _openScreen(Route route) async {
     await Navigator.push(context, route);
-    setState(() {}); // 🔥 rebuild HomeScreen
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
 
-    /// 🔥 always take latest 3 items
+
     final recent = HistoryStorage.history.take(3).toList();
 
     return Scaffold(
@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
             const SizedBox(height: 25),
 
-            /// 📷 CAMERA
+
             MainActionButton(
               icon: Icons.camera_alt,
               title: "Open Camera",
@@ -124,7 +124,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
             const SizedBox(height: 15),
 
-            /// 🔥 RECENT LIST
             if (recent.isEmpty)
               const Text(
                 "No recent classifications yet",

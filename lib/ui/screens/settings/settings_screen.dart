@@ -41,7 +41,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: Column(
           children: [
 
-            /// SETTINGS CARD
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -51,7 +50,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: Column(
                 children: [
 
-                  /// NOTIFICATIONS
                   _settingTile(
                     icon: Icons.notifications_none,
                     title: "Notifications",
@@ -69,7 +67,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   const Divider(),
                   const SizedBox(height: 16),
 
-                  /// DARK MODE
                   _settingTile(
                     icon: Icons.dark_mode_outlined,
                     title: "Dark Mode",
@@ -87,7 +84,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   const Divider(),
                   const SizedBox(height: 16),
 
-                  /// LANGUAGE
                   _settingTile(
                     icon: Icons.language,
                     title: "Language",
@@ -99,7 +95,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   const Divider(),
                   const SizedBox(height: 16),
 
-                  /// ABOUT APP 🔥 (CONNECTED)
                   _settingTile(
                     icon: Icons.info_outline,
                     title: "About App",

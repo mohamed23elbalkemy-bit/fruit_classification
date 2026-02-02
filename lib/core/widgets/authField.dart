@@ -26,7 +26,7 @@ class _AuthFieldState extends State<AuthField> {
         hintText: widget.hint,
         hintStyle: const TextStyle(fontSize: 13),
 
-        /// LEFT ICON
+
         prefixIcon: Icon(
           widget.icon,
           color: const Color(0xFF34A853),

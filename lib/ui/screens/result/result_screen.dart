@@ -46,7 +46,6 @@ class ResultScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
 
-            /// IMAGE
             Container(
               height: 180,
               width: 180,
@@ -86,7 +85,6 @@ class ResultScreen extends StatelessWidget {
 
             const SizedBox(height: 40),
 
-            /// ACCURACY
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -122,7 +120,6 @@ class ResultScreen extends StatelessWidget {
 
             const SizedBox(height: 50),
 
-            /// Scan Again
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -158,7 +155,6 @@ class ResultScreen extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            /// SAVE TO HISTORY (يدوي فقط 👌)
             SizedBox(
               width: double.infinity,
               child: OutlinedButton(
@@ -171,7 +167,7 @@ class ResultScreen extends StatelessWidget {
                 ),
                 onPressed: () {
                   HistoryStorage.add(result);
-                  Navigator.pop(context); // يرجع للهوم ويتحدّث
+                  Navigator.pop(context);
                 },
                 child: const Text(
                   "Save to History",

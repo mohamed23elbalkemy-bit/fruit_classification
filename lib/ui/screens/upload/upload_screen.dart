@@ -18,7 +18,7 @@ class UploadScreen extends StatelessWidget {
 
       final result = FruitResult(
         imagePath: image.path,
-        name: "Orange", // Dummy دلوقتي
+        name: "Orange",
         grade: "First Grade",
         accuracy: 0.91,
         dateTime: DateTime.now(),

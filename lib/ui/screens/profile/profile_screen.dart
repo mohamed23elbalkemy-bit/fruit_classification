@@ -34,7 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            /// USER CARD
+
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -67,7 +67,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
             const SizedBox(height: 20),
 
-            /// ✏️ Edit Profile
+
             profileItem(
               Icons.edit,
               "Edit Profile",
@@ -82,7 +82,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               },
             ),
 
-            /// 🕘 History (NEW 🔥)
             profileItem(
               Icons.history,
               "History",
@@ -150,7 +149,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
   void logout(BuildContext context) {
-    /// هنا بعدين هتتحول Firebase SignOut
+
     UserStorage.update(
       UserStorage.currentUser.copyWith(
         name: "",
