@@ -60,7 +60,9 @@ class Onboarding1 extends StatelessWidget {
             const SizedBox(height: 16),
 
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushReplacement(context, AppRoutes.loginScreen);
+              },
               child: const Text(
                 'Skip',
                 style: TextStyle(color: Colors.grey, fontSize: 16),
