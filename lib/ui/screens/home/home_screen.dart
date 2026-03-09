@@ -3,7 +3,7 @@ import '../../../core/routes/app_routes.dart';
 import '../../../core/widgets/mainActionButton.dart';
 import '../../../core/widgets/recentItem.dart';
 import '../history/data/history_storage.dart';
-
+import '../../../core/services/notification_service.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -12,14 +12,27 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  DateTime? lastScanTime;
   Future<void> _openScreen(Route route) async {
     await Navigator.push(context, route);
+
+    lastScanTime = DateTime.now();
+
     setState(() {});
   }
+  @override
+  void initState() {
+    super.initState();
 
+    Future.delayed(const Duration(hours: 2), () {
+      if (lastScanTime == null ||
+          DateTime.now().difference(lastScanTime!) > const Duration(hours: 2)) {
+        NotificationService.scheduleReminder();
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
-
 
     final recent = HistoryStorage.history.take(3).toList();
 
@@ -27,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: const Color(0xFFF3FFF6),
 
       appBar: AppBar(
-        backgroundColor: Color(0xFFF3FFF6),
+        backgroundColor: const Color(0xFFF3FFF6),
         automaticallyImplyLeading: false,
         elevation: 0,
         title: Row(
@@ -73,7 +86,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
             const SizedBox(height: 25),
 
-
             MainActionButton(
               icon: Icons.camera_alt,
               title: "Open Camera",
@@ -86,7 +98,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
             const SizedBox(height: 15),
 
-            /// 🖼️ UPLOAD
             MainActionButton(
               icon: Icons.image_outlined,
               title: "Upload Image",
@@ -134,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: RecentItem(
-                      image: item.imagePath,
+                      image: item.imagePaths.first,
                       title: item.name,
                       confidence:
                       "${(item.accuracy * 100).toStringAsFixed(1)}%",

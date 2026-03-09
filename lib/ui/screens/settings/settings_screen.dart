@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fruit_classification/ui/screens/about/about_app_screen.dart';
 
+import '../../../core/services/notification_service.dart';
+
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 
@@ -57,8 +59,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     trailing: Switch(
                       value: notifications,
                       activeColor: Colors.green,
-                      onChanged: (value) {
+                      onChanged: (value) async {
                         setState(() => notifications = value);
+
+                        if (value) {
+                          await NotificationService.showNotification(
+                            title: "FruitAI",
+                            body: "Notifications Enabled Successfully",
+                          );
+                        }
                       },
                     ),
                   ),

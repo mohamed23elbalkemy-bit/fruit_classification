@@ -1,8 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 
+import '../../../core/services/notification_service.dart';
+import '../result/result_screen.dart';
 import 'data/history_storage.dart';
-
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -17,6 +18,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF3FFF6),
+
       appBar: AppBar(
         elevation: 0,
         backgroundColor: const Color(0xFFF3FFF6),
@@ -25,11 +27,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
           style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
         ),
         iconTheme: const IconThemeData(color: Colors.green),
+
         actions: [
           if (HistoryStorage.history.isNotEmpty)
             IconButton(
               icon: const Icon(Icons.delete_outline, color: Colors.red),
               onPressed: () async {
+
                 final confirmed = await showDialog<bool>(
                   context: context,
                   builder: (context) {
@@ -45,7 +49,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           },
                           child: const Text(
                             "Cancel",
-                            style:  TextStyle(color: Colors.black,),
+                            style: TextStyle(color: Colors.black),
                           ),
                         ),
                         ElevatedButton(
@@ -55,7 +59,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           onPressed: () {
                             Navigator.pop(context, true);
                           },
-                          child: const Text("Delete",style: TextStyle(color: Colors.black,)),
+                          child: const Text(
+                            "Delete",
+                            style: TextStyle(color: Colors.black),
+                          ),
                         ),
                       ],
                     );
@@ -66,9 +73,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   setState(() {
                     HistoryStorage.clear();
                   });
+                  NotificationService.showHistoryDeleted();
                 }
               },
-
             ),
         ],
       ),
@@ -80,15 +87,18 @@ class _HistoryScreenState extends State<HistoryScreen> {
           style: TextStyle(color: Colors.black54),
         ),
       )
+
           : ListView.builder(
         padding: const EdgeInsets.all(16),
         itemCount: HistoryStorage.history.length,
         itemBuilder: (context, index) {
+
           final item = HistoryStorage.history[index];
 
           return Dismissible(
             key: ValueKey(item.dateTime.toString()),
             direction: DismissDirection.endToStart,
+
             background: Container(
               alignment: Alignment.centerRight,
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -98,21 +108,35 @@ class _HistoryScreenState extends State<HistoryScreen> {
               ),
               child: const Icon(Icons.delete, color: Colors.red),
             ),
+
             onDismissed: (_) {
               setState(() {
                 HistoryStorage.removeAt(index);
               });
             },
-            child: _historyItem(
-              image: item.imagePath,
-              name: item.name,
-              grade: item.grade,
-              gradeColor:
-              item.grade == "First Grade" ? Colors.green : Colors.orange,
-              date:
-              "${item.dateTime.day}/${item.dateTime.month}/${item.dateTime.year}",
-              time:
-              "${item.dateTime.hour}:${item.dateTime.minute.toString().padLeft(2, '0')}",
+
+            child: GestureDetector(
+
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => ResultScreen(result: item),
+                  ),
+                );
+              },
+
+              child: _historyItem(
+                image: item.imagePaths.first,
+                name: item.name,
+                grade: item.grade,
+                gradeColor:
+                item.grade == "First Grade" ? Colors.green : Colors.orange,
+                date:
+                "${item.dateTime.day}/${item.dateTime.month}/${item.dateTime.year}",
+                time:
+                "${item.dateTime.hour}:${item.dateTime.minute.toString().padLeft(2, '0')}",
+              ),
             ),
           );
         },
@@ -129,15 +153,19 @@ class _HistoryScreenState extends State<HistoryScreen> {
     required String date,
     required String time,
   }) {
+
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(12),
+
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
       ),
+
       child: Row(
         children: [
+
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Image.file(
@@ -147,25 +175,32 @@ class _HistoryScreenState extends State<HistoryScreen> {
               fit: BoxFit.cover,
             ),
           ),
+
           const SizedBox(width: 12),
 
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+
                 Text(
                   name,
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 15),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15),
                 ),
+
                 const SizedBox(height: 4),
+
                 Container(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 10, vertical: 4),
+
                   decoration: BoxDecoration(
                     color: gradeColor.withOpacity(0.15),
                     borderRadius: BorderRadius.circular(20),
                   ),
+
                   child: Text(
                     grade,
                     style: TextStyle(
@@ -181,12 +216,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
+
               Text(date, style: const TextStyle(fontSize: 12)),
+
               const SizedBox(height: 4),
+
               Text(
                 time,
-                style:
-                const TextStyle(fontSize: 11, color: Colors.black54),
+                style: const TextStyle(
+                    fontSize: 11,
+                    color: Colors.black54),
               ),
             ],
           ),
@@ -195,5 +234,3 @@ class _HistoryScreenState extends State<HistoryScreen> {
     );
   }
 }
-
-

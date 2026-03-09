@@ -6,8 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import '../result/model/fruit_result_model.dart';
 import '../result/result_screen.dart';
 
-
-
 class CameraScreen extends StatefulWidget {
   const CameraScreen({super.key});
 
@@ -21,8 +19,17 @@ class _CameraScreenState extends State<CameraScreen> {
   bool _isFlashOn = false;
   bool _isCapturing = false;
 
-  XFile? _capturedImage;
+  final List<XFile> _capturedImages = [];
   final ImagePicker _picker = ImagePicker();
+
+  int currentStep = 0;
+
+  final List<String> steps = [
+    "Take Front Photo",
+    "Take Back Photo",
+    "Take Left Photo",
+    "Take Right Photo"
+  ];
 
   @override
   void initState() {
@@ -50,32 +57,44 @@ class _CameraScreenState extends State<CameraScreen> {
     setState(() => _isCapturing = true);
 
     final image = await _controller.takePicture();
+    _capturedImages.add(image);
 
-    final result = FruitResult(
-      imagePath: image.path,
-      name: "Apple",
-      grade: "First Grade",
-      accuracy: 0.94,
-      dateTime: DateTime.now(),
-    );
+    setState(() {
+      currentStep++;
+      _isCapturing = false;
+    });
 
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (_) => ResultScreen(result: result),
-      ),
-    );
+    if (_capturedImages.length == 4) {
+      final result = FruitResult(
+        imagePaths: _capturedImages.map((e) => e.path).toList(),
+        name: "Apple",
+        grade: "First Grade",
+        accuracy: 0.94,
+        dateTime: DateTime.now(),
+      );
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) => ResultScreen(result: result),
+        ),
+      );
+    }
   }
 
   Future<void> _openGallery() async {
     try {
-      final XFile? image =
-      await _picker.pickImage(source: ImageSource.gallery);
+      final List<XFile> images = await _picker.pickMultiImage();
 
-      if (image == null) return;
+      if (images.length < 4) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Please select 4 images")),
+        );
+        return;
+      }
 
       final result = FruitResult(
-        imagePath: image.path,
+        imagePaths: images.take(4).map((e) => e.path).toList(),
         name: "Banana",
         grade: "Second Grade",
         accuracy: 0.82,
@@ -93,7 +112,6 @@ class _CameraScreenState extends State<CameraScreen> {
     }
   }
 
-
   Future<void> _toggleFlash() async {
     if (!_controller.value.isInitialized) return;
 
@@ -110,17 +128,53 @@ class _CameraScreenState extends State<CameraScreen> {
     super.dispose();
   }
 
+  Widget _circleIcon(IconData icon, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: const BoxDecoration(
+          color: Colors.black54,
+          shape: BoxShape.circle,
+        ),
+        child: Icon(icon, color: Colors.white, size: 26),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
         children: [
+
           Positioned.fill(
             child: _isInitialized
                 ? CameraPreview(_controller)
                 : const Center(
               child: CircularProgressIndicator(color: Colors.white),
+            ),
+          ),
+
+          Positioned(
+            top: 80,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: Container(
+                padding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                  color: Colors.black54,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  steps[currentStep],
+                  style: const TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              ),
             ),
           ),
 
@@ -148,6 +202,7 @@ class _CameraScreenState extends State<CameraScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+
                 _circleIcon(Icons.photo_library, _openGallery),
 
                 GestureDetector(
@@ -167,20 +222,6 @@ class _CameraScreenState extends State<CameraScreen> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _circleIcon(IconData icon, VoidCallback onTap) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        decoration: const BoxDecoration(
-          color: Colors.black54,
-          shape: BoxShape.circle,
-        ),
-        child: Icon(icon, color: Colors.white, size: 26),
       ),
     );
   }
