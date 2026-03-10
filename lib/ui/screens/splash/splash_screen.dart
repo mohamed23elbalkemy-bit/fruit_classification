@@ -43,8 +43,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -65,12 +68,12 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Container(
                 width: 110,
                 height: 110,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
+                decoration: BoxDecoration(
+                  color:Colors.white,
                   shape: BoxShape.circle,
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(6),
+                  padding: const EdgeInsets.all(5),
                   child: Image.asset(
                     'assets/images/splash_logo.jpg',
                     fit: BoxFit.contain,
@@ -93,11 +96,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
           const SizedBox(height: 8),
 
-          const Text(
+          Text(
             'AI-Powered Fruit Recognition',
             style: TextStyle(
               fontSize: 14,
-              color: Color(0xFF9E9E9E),
+              color: isDark ? Colors.grey.shade400 : const Color(0xFF9E9E9E),
             ),
           ),
 
@@ -120,9 +123,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
           const SizedBox(height: 12),
 
-          const Text(
+          Text(
             'Loading...',
-            style: TextStyle(color: Color(0xFF9E9E9E)),
+            style: TextStyle(
+              color: isDark ? Colors.grey.shade400 : const Color(0xFF9E9E9E),
+            ),
           ),
         ],
       ),

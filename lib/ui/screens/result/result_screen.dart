@@ -17,19 +17,19 @@ class ResultScreen extends StatefulWidget {
 class _ResultScreenState extends State<ResultScreen> {
   @override
   void initState() {
-      super.initState();
-      Future.delayed(const Duration(milliseconds: 500), () {
-        NotificationService.showClassificationSuccess();
-      });
-    }
+    super.initState();
+    Future.delayed(const Duration(milliseconds: 500), () {
+      NotificationService.showClassificationSuccess();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF3FFF6),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
 
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF3FFF6),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.green),
@@ -46,7 +46,7 @@ class _ResultScreenState extends State<ResultScreen> {
         margin: const EdgeInsets.all(20),
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(22),
           boxShadow: [
             BoxShadow(
@@ -61,7 +61,6 @@ class _ResultScreenState extends State<ResultScreen> {
           child: Column(
             children: [
 
-              /// fruit images
               GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -77,7 +76,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     height: 150,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: Colors.grey.shade100,
+                      color: Colors.grey.shade200,
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
@@ -148,7 +147,6 @@ class _ResultScreenState extends State<ResultScreen> {
 
               const SizedBox(height: 50),
 
-              /// scan again
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -165,9 +163,9 @@ class _ResultScreenState extends State<ResultScreen> {
                       AppRoutes.cameraScreen,
                     );
                   },
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Icon(Icons.refresh, color: Colors.white),
                       SizedBox(width: 6),
                       Text(
@@ -184,7 +182,6 @@ class _ResultScreenState extends State<ResultScreen> {
 
               const SizedBox(height: 20),
 
-              /// save history
               SizedBox(
                 width: double.infinity,
                 child: OutlinedButton(

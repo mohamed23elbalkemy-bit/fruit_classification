@@ -4,6 +4,7 @@ import '../../../core/widgets/mainActionButton.dart';
 import '../../../core/widgets/recentItem.dart';
 import '../history/data/history_storage.dart';
 import '../../../core/services/notification_service.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -13,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   DateTime? lastScanTime;
+
   Future<void> _openScreen(Route route) async {
     await Navigator.push(context, route);
 
@@ -20,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     setState(() {});
   }
+
   @override
   void initState() {
     super.initState();
@@ -31,26 +34,26 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     });
   }
+
   @override
   Widget build(BuildContext context) {
-
     final recent = HistoryStorage.history.take(3).toList();
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF3FFF6),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
 
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF3FFF6),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         elevation: 0,
         title: Row(
-          children: const [
-            Icon(Icons.apple, color: Colors.green),
-            SizedBox(width: 6),
+          children: [
+            const Icon(Icons.apple, color: Colors.green),
+            const SizedBox(width: 6),
             Text(
               "FruitAI",
               style: TextStyle(
-                color: Colors.black,
+                color: Theme.of(context).textTheme.titleLarge?.color,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -58,7 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.person_outline, color: Colors.black),
+            icon: Icon(
+              Icons.person_outline,
+              color: Theme.of(context).iconTheme.color,
+            ),
             onPressed: () {
               Navigator.push(context, AppRoutes.profileScreen);
             },
@@ -72,16 +78,22 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            const Text(
+            Text(
               "Classify Your Fruit",
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).textTheme.titleLarge?.color,
+              ),
             ),
 
             const SizedBox(height: 6),
 
-            const Text(
+            Text(
               "Take a photo or upload an image to identify any fruit",
-              style: TextStyle(color: Colors.black54),
+              style: TextStyle(
+                color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7),
+              ),
             ),
 
             const SizedBox(height: 25),
@@ -113,9 +125,13 @@ class _HomeScreenState extends State<HomeScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                Text(
                   "Recent Classifications",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).textTheme.titleLarge?.color,
+                  ),
                 ),
                 GestureDetector(
                   onTap: () {
@@ -135,9 +151,11 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 15),
 
             if (recent.isEmpty)
-              const Text(
+              Text(
                 "No recent classifications yet",
-                style: TextStyle(color: Colors.black54),
+                style: TextStyle(
+                  color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7),
+                ),
               )
             else
               Column(

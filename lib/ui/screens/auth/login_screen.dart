@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: const Color(0xFFE1F8E5),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -39,8 +39,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   Container(
                     width: 56,
                     height: 56,
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFE9F8EE),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).cardColor,
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(
@@ -59,9 +59,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   const SizedBox(height: 6),
 
-                  const Text(
+                  Text(
                     'Sign in to continue classifying fruits',
-                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                    style: TextStyle(color: Theme.of(context).textTheme.bodyMedium!.color),
                   ),
 
                   const SizedBox(height: 40),
@@ -135,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   const SizedBox(height: 30),
 
-                  const Text('or', style: TextStyle(color: Colors.grey)),
+                  Text('or', style: TextStyle(color: Theme.of(context).textTheme.bodyMedium!.color)),
 
                   const SizedBox(height: 30),
 
@@ -167,10 +167,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   const SizedBox(height: 30),
 
-                  const Text(
+                  Text(
                     'By continuing, you agree to our Terms & Privacy Policy',
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 11, color: Colors.grey),
+                    style: TextStyle(color: Theme.of(context).textTheme.bodyMedium!.color),
                   ),
 
                   const SizedBox(height: 16),

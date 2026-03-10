@@ -6,6 +6,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await NotificationService.init();
-  await NotificationService.scheduleReminder();
+  // await NotificationService.scheduleReminder();
+
   runApp(const FruitClassificationApp());
 }

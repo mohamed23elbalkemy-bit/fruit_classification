@@ -49,11 +49,11 @@ class UploadScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF3FFF6),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
 
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: const Color(0xFFF3FFF6),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         leading: IconButton(
           icon: const Icon(Icons.close, color: Colors.green),
           onPressed: () => Navigator.pop(context),
@@ -75,7 +75,7 @@ class UploadScreen extends StatelessWidget {
               padding: const EdgeInsets.all(20),
 
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
                   color: Colors.green.withOpacity(0.4),
@@ -98,16 +98,21 @@ class UploadScreen extends StatelessWidget {
 
                   const SizedBox(height: 25),
 
-                  const Text(
+                  Text(
                     "Upload 4 images of the fruit",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).textTheme.titleMedium?.color,
+                    ),
                   ),
 
                   const SizedBox(height: 10),
 
-                  const Text(
+                  Text(
                     "Choose four images showing different sides",
-                    style: TextStyle(color: Colors.grey),
+                    style: TextStyle(
+                      color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7),
+                    ),
                   ),
 
                   const SizedBox(height: 26),
@@ -161,11 +166,12 @@ class UploadScreen extends StatelessWidget {
 
             const SizedBox(height: 35),
 
-            const Text(
+            Text(
               "Tips for best results",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
+                color: Theme.of(context).textTheme.titleMedium?.color,
               ),
             ),
 
@@ -203,7 +209,9 @@ class Tip extends StatelessWidget {
           Expanded(
             child: Text(
               text,
-              style: const TextStyle(color: Colors.black54),
+              style: TextStyle(
+                color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7),
+              ),
             ),
           ),
         ],

@@ -5,8 +5,11 @@ class AboutAppScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: const Color(0xFFF3FFF6),
+      backgroundColor:
+      isDark ? Theme.of(context).scaffoldBackgroundColor : const Color(0xFFF3FFF6),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -15,9 +18,11 @@ class AboutAppScreen extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: isDark ? Theme.of(context).cardColor : Colors.white,
                 borderRadius: BorderRadius.circular(24),
-                boxShadow: [
+                boxShadow: isDark
+                    ? []
+                    : [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.05),
                     blurRadius: 15,
@@ -27,7 +32,6 @@ class AboutAppScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  // App Icon
                   Container(
                     width: 72,
                     height: 72,
@@ -44,7 +48,6 @@ class AboutAppScreen extends StatelessWidget {
 
                   const SizedBox(height: 36),
 
-                  // Title
                   const Text(
                     'Fruit Classifier',
                     style: TextStyle(
@@ -56,17 +59,17 @@ class AboutAppScreen extends StatelessWidget {
 
                   const SizedBox(height: 6),
 
-
                   Text(
                     'AI-Powered Quality Detection',
                     style: TextStyle(
                       fontSize: 14,
-                      color: Colors.grey.shade600,
+                      color: isDark
+                          ? Colors.grey.shade400
+                          : Colors.grey.shade600,
                     ),
                   ),
 
                   const SizedBox(height: 40),
-
 
                   Text(
                     'Our advanced AI technology helps you classify fruits '
@@ -77,18 +80,21 @@ class AboutAppScreen extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 14,
                       height: 1.6,
-                      color: Colors.grey.shade700,
+                      color: isDark
+                          ? Colors.grey.shade300
+                          : Colors.grey.shade700,
                     ),
                   ),
 
                   const SizedBox(height: 30),
 
-
                   Text(
                     'Version 1.0.0',
                     style: TextStyle(
                       fontSize: 13,
-                      color: Colors.grey.shade500,
+                      color: isDark
+                          ? Colors.grey.shade400
+                          : Colors.grey.shade500,
                     ),
                   ),
 
@@ -98,13 +104,14 @@ class AboutAppScreen extends StatelessWidget {
                     '© 2025 Fruit Classifier Inc.',
                     style: TextStyle(
                       fontSize: 12,
-                      color: Colors.grey.shade400,
+                      color: isDark
+                          ? Colors.grey.shade500
+                          : Colors.grey.shade400,
                     ),
                   ),
 
                   const SizedBox(height: 40),
 
-                  // Contact Button
                   SizedBox(
                     width: double.infinity,
                     height: 48,
@@ -157,8 +164,13 @@ class _StatItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       children: [
+        const Text(
+          '',
+        ),
         Text(
           value,
           style: const TextStyle(
@@ -172,7 +184,7 @@ class _StatItem extends StatelessWidget {
           label,
           style: TextStyle(
             fontSize: 12,
-            color: Colors.grey.shade600,
+            color: isDark ? Colors.grey.shade400 : Colors.grey.shade600,
           ),
         ),
       ],

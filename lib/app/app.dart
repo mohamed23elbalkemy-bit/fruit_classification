@@ -1,14 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:fruit_classification/ui/screens/auth/login_screen.dart';
 import '../ui/screens/splash/splash_screen.dart';
 
-class FruitClassificationApp extends StatelessWidget {
+class FruitClassificationApp extends StatefulWidget {
   const FruitClassificationApp({super.key});
+
+  static void setDarkMode(BuildContext context, bool value) {
+    final state = context.findAncestorStateOfType<_FruitClassificationAppState>();
+    state?.changeTheme(value);
+  }
+
+  @override
+  State<FruitClassificationApp> createState() => _FruitClassificationAppState();
+}
+
+class _FruitClassificationAppState extends State<FruitClassificationApp> {
+
+  bool isDark = false;
+
+  void changeTheme(bool value) {
+    setState(() {
+      isDark = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+
+      themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+
+      theme: ThemeData(
+        brightness: Brightness.light,
+        scaffoldBackgroundColor: const Color(0xFFF3FFF6),
+        cardColor: Colors.white,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFFF3FFF6),
+          iconTheme: IconThemeData(color: Colors.green),
+        ),
+      ),
+
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: const Color(0xFF121212),
+        cardColor: const Color(0xFF1E1E1E),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFF121212),
+        ),
+      ),
+
+      home: const LoginScreen(),
     );
   }
 }

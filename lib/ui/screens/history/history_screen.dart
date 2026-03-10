@@ -17,11 +17,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF3FFF6),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
 
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: const Color(0xFFF3FFF6),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: const Text(
           "Classification History",
           style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
@@ -47,9 +47,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           onPressed: () {
                             Navigator.pop(context, false);
                           },
-                          child: const Text(
+                          child: Text(
                             "Cancel",
-                            style: TextStyle(color: Colors.black),
+                            style: TextStyle(
+                              color: Theme.of(context).textTheme.bodyMedium?.color,
+                            ),
                           ),
                         ),
                         ElevatedButton(
@@ -61,7 +63,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           },
                           child: const Text(
                             "Delete",
-                            style: TextStyle(color: Colors.black),
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
                       ],
@@ -81,10 +83,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
       ),
 
       body: HistoryStorage.history.isEmpty
-          ? const Center(
+          ? Center(
         child: Text(
           "No history yet",
-          style: TextStyle(color: Colors.black54),
+          style: TextStyle(
+            color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.6),
+          ),
         ),
       )
 
@@ -127,6 +131,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               },
 
               child: _historyItem(
+                context: context,
                 image: item.imagePaths.first,
                 name: item.name,
                 grade: item.grade,
@@ -146,6 +151,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
 
   Widget _historyItem({
+    required BuildContext context,
     required String image,
     required String name,
     required String grade,
@@ -159,7 +165,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
       padding: const EdgeInsets.all(12),
 
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16),
       ),
 
@@ -185,9 +191,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
                 Text(
                   name,
-                  style: const TextStyle(
+                  style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 15),
+                      fontSize: 15,
+                      color: Theme.of(context).textTheme.titleMedium?.color),
                 ),
 
                 const SizedBox(height: 4),
@@ -217,15 +224,21 @@ class _HistoryScreenState extends State<HistoryScreen> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
 
-              Text(date, style: const TextStyle(fontSize: 12)),
+              Text(
+                date,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Theme.of(context).textTheme.bodySmall?.color,
+                ),
+              ),
 
               const SizedBox(height: 4),
 
               Text(
                 time,
-                style: const TextStyle(
+                style: TextStyle(
                     fontSize: 11,
-                    color: Colors.black54),
+                    color: Theme.of(context).textTheme.bodySmall?.color?.withOpacity(0.7)),
               ),
             ],
           ),

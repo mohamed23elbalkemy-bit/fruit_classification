@@ -8,8 +8,11 @@ class Onboarding2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: const Color(0xFFE1F8E5),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -22,7 +25,9 @@ class Onboarding2 extends StatelessWidget {
               height: 320,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: const Color(0xFFDFF5E3),
+                color: isDark
+                    ? Theme.of(context).cardColor
+                    : const Color(0xFFDFF5E3),
                 borderRadius: BorderRadius.circular(32),
               ),
               child: Stack(
@@ -50,15 +55,10 @@ class Onboarding2 extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 8),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: isDark
+                            ? Theme.of(context).cardColor
+                            : Colors.white,
                         borderRadius: BorderRadius.circular(18),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 10,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
                       ),
                       child: const Text(
                         '99% Accuracy',
@@ -100,10 +100,13 @@ class Onboarding2 extends StatelessWidget {
 
             const SizedBox(height: 12),
 
-            const Text(
+            Text(
               'Our AI model detects fruit type and quality.',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16, color: Colors.grey),
+              style: TextStyle(
+                fontSize: 16,
+                color: isDark ? Colors.grey.shade400 : Colors.grey,
+              ),
             ),
 
             const Spacer(),
@@ -121,9 +124,12 @@ class Onboarding2 extends StatelessWidget {
               onPressed: () {
                 Navigator.pushReplacement(context, AppRoutes.loginScreen);
               },
-              child: const Text(
+              child: Text(
                 'Skip',
-                style: TextStyle(color: Colors.grey, fontSize: 16),
+                style: TextStyle(
+                  color: isDark ? Colors.grey.shade400 : Colors.grey,
+                  fontSize: 16,
+                ),
               ),
             ),
           ],
@@ -144,25 +150,21 @@ class _FloatingIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
         width: 42,
         height: 42,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: isDark ? Theme.of(context).cardColor : Colors.white,
           shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.12),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-          ],
         ),
-        child: Icon(
-          icon,
-          color: const Color(0xFF4CAF50),
+        child: const Icon(
+          Icons.crop_free,
+          color: Color(0xFF4CAF50),
           size: 22,
         ),
       ),

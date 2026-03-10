@@ -8,8 +8,11 @@ class Onboarding1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: const Color(0xFFE1F8E5),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -21,7 +24,7 @@ class Onboarding1 extends StatelessWidget {
             Container(
               height: 260,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: isDark ? Theme.of(context).cardColor : Colors.white,
                 borderRadius: BorderRadius.circular(24),
               ),
               child: ClipRRect(
@@ -42,10 +45,13 @@ class Onboarding1 extends StatelessWidget {
 
             const SizedBox(height: 12),
 
-            const Text(
+            Text(
               'Scan or upload a fruit image and get instant classification.',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16, color: Colors.grey),
+              style: TextStyle(
+                fontSize: 16,
+                color: isDark ? Colors.grey.shade400 : Colors.grey,
+              ),
             ),
 
             const Spacer(),
@@ -63,9 +69,12 @@ class Onboarding1 extends StatelessWidget {
               onPressed: () {
                 Navigator.pushReplacement(context, AppRoutes.loginScreen);
               },
-              child: const Text(
+              child: Text(
                 'Skip',
-                style: TextStyle(color: Colors.grey, fontSize: 16),
+                style: TextStyle(
+                  color: isDark ? Colors.grey.shade400 : Colors.grey,
+                  fontSize: 16,
+                ),
               ),
             ),
           ],

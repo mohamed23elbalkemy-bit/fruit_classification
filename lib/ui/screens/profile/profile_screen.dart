@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fruit_classification/ui/screens/profile/storage/user_storage.dart';
 import 'package:fruit_classification/ui/screens/history/history_screen.dart';
+import 'package:fruit_classification/ui/screens/splash/splash_screen.dart';
 import '../auth/login_screen.dart';
 import 'editProfile/edit_profile_screen.dart';
 import 'package:fruit_classification/ui/screens/settings/settings_screen.dart';
@@ -20,10 +21,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final user = UserStorage.currentUser;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF3FFF6),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: const Color(0xFFF3FFF6),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: const Text(
           "Profile",
           style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
@@ -38,7 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(18),
               ),
               child: Column(
@@ -52,14 +53,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const SizedBox(height: 16),
                   Text(
                     user.name,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 16),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Theme.of(context).textTheme.titleMedium?.color),
                   ),
                   const SizedBox(height: 5),
                   Text(
                     user.email,
-                    style: const TextStyle(
-                        color: Colors.black54, fontSize: 13),
+                    style: TextStyle(
+                        color: Theme.of(context).textTheme.bodySmall?.color,
+                        fontSize: 13),
                   ),
                 ],
               ),
@@ -67,73 +71,63 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
             const SizedBox(height: 20),
 
-
-            profileItem(
-              Icons.edit,
-              "Edit Profile",
-              onTap: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const EditProfileScreen(),
-                  ),
-                );
-                setState(() {});
-              },
+            profileItem(Icons.edit,"Edit Profile",onTap: () async {
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const EditProfileScreen(),
+                ),
+              );
+              setState(() {});
+            },
             ),
 
-            profileItem(
-              Icons.history,
-              "History",
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const HistoryScreen(),
-                  ),
-                );
-              },
+            profileItem(Icons.history,"History",onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const HistoryScreen(),
+                ),
+              );
+            },
             ),
 
-            profileItem(
-              Icons.settings,
-              "Settings",
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const SettingsScreen(),
-                  ),
-                );
-              },
+            profileItem(Icons.settings,"Settings",onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const SettingsScreen(),
+                ),
+              );
+            },
             ),
 
-            profileItem(
-              Icons.logout,
-              "Log Out",
-              color: Colors.redAccent,
-              onTap: () {
-                showLogoutDialog(context);
-              },
+            profileItem(Icons.logout,"Log Out",
+                color: Colors.redAccent,
+                onTap: () {showLogoutDialog(context);}
             ),
-
-
           ],
         ),
       ),
     );
   }
+
   void showLogoutDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFFF3FFF6),
-        title: const Text("Log Out",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold)),
+        backgroundColor: Theme.of(context).cardColor,
+        title: Text("Log Out",
+            style: TextStyle(
+                color: Theme.of(context).textTheme.titleMedium?.color,
+                fontWeight: FontWeight.bold)),
         content: const Text("Are you sure you want to log out?"),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text("Cancel",style: TextStyle(color: Colors.black)),
+            child: Text("Cancel",
+                style: TextStyle(
+                    color: Theme.of(context).textTheme.bodyMedium?.color)),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -142,12 +136,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
             onPressed: () {
               logout(context);
             },
-            child: const Text("Log Out",style: TextStyle(color: Colors.black)),
+            child: const Text("Log Out"),
           ),
         ],
       ),
     );
   }
+
   void logout(BuildContext context) {
 
     UserStorage.update(
@@ -178,7 +173,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         margin: const EdgeInsets.only(bottom: 20),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Row(
@@ -189,7 +184,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               title,
               style: TextStyle(
                 fontWeight: FontWeight.w600,
-                color: title == "Log Out" ? Colors.red : Colors.black,
+                color: title == "Log Out"
+                    ? Colors.red
+                    : Theme.of(context).textTheme.titleMedium?.color,
               ),
             ),
           ],

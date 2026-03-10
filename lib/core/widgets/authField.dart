@@ -47,7 +47,7 @@ class _AuthFieldState extends State<AuthField> {
         )
             : null,
         filled: true,
-        fillColor: Colors.white,
+        fillColor: Theme.of(context).cardColor,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
           borderSide: BorderSide.none,

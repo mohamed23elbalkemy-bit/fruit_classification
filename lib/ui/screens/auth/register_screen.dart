@@ -25,7 +25,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: const Color(0xFFE1F8E5),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -40,8 +40,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Container(
                     width: 56,
                     height: 56,
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFE9F8EE),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).cardColor,
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(

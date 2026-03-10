@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fruit_classification/ui/screens/about/about_app_screen.dart';
 
+import '../../../app/app.dart';
 import '../../../core/services/notification_service.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -17,21 +18,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF3FFF6),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF3FFF6),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Text(
+          children: [
+            const Text(
               "Settings",
               style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 6),
+            const SizedBox(height: 6),
             Text(
               "Manage your app preferences",
-              style: TextStyle(color: Colors.grey, fontSize: 16),
+              style: TextStyle(
+                color: Theme.of(context).textTheme.bodySmall?.color,
+                fontSize: 16,
+              ),
             ),
           ],
         ),
@@ -46,7 +50,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Column(
@@ -85,6 +89,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       activeColor: Colors.green,
                       onChanged: (value) {
                         setState(() => darkMode = value);
+                        FruitClassificationApp.setDarkMode(context, value);
                       },
                     ),
                   ),
@@ -124,9 +129,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
             const SizedBox(height: 20),
 
-            const Text(
+            Text(
               "Version 1.0.0",
-              style: TextStyle(color: Colors.black45),
+              style: TextStyle(
+                color: Theme.of(context).textTheme.bodySmall?.color,
+              ),
             ),
           ],
         ),
@@ -151,9 +158,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
         title: Text(
           title,
-          style: const TextStyle(fontWeight: FontWeight.w600),
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            color: Theme.of(context).textTheme.titleMedium?.color,
+          ),
         ),
-        subtitle: Text(subtitle),
+        subtitle: Text(
+          subtitle,
+          style: TextStyle(
+            color: Theme.of(context).textTheme.bodySmall?.color,
+          ),
+        ),
         trailing: trailing,
       ),
     );
