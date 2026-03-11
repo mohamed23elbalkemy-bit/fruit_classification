@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fruit_classification/ui/screens/auth/login_screen.dart';
+import '../core/services/local_storage_service.dart';
 import '../ui/screens/splash/splash_screen.dart';
 
 class FruitClassificationApp extends StatefulWidget {
@@ -15,13 +15,26 @@ class FruitClassificationApp extends StatefulWidget {
 }
 
 class _FruitClassificationAppState extends State<FruitClassificationApp> {
+  @override
+  void initState() {
+    super.initState();
+    _loadTheme();
+  }
 
+  void _loadTheme() async {
+    bool savedTheme = await LocalStorageService.getDarkMode();
+    setState(() {
+      isDark = savedTheme;
+    });
+  }
   bool isDark = false;
 
-  void changeTheme(bool value) {
+  void changeTheme(bool value) async {
     setState(() {
       isDark = value;
     });
+
+    await LocalStorageService.saveDarkMode(value);
   }
 
   @override
@@ -50,7 +63,7 @@ class _FruitClassificationAppState extends State<FruitClassificationApp> {
         ),
       ),
 
-      home: const LoginScreen(),
+      home: const SplashScreen(),
     );
   }
 }

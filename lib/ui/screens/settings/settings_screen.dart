@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fruit_classification/ui/screens/about/about_app_screen.dart';
 
 import '../../../app/app.dart';
+import '../../../core/services/local_storage_service.dart';
 import '../../../core/services/notification_service.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -14,7 +15,19 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   bool notifications = true;
   bool darkMode = false;
+  @override
+  void initState() {
+    super.initState();
+    _loadSettings();
+  }
 
+  void _loadSettings() async {
+    bool savedTheme = await LocalStorageService.getDarkMode();
+
+    setState(() {
+      darkMode = savedTheme;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,9 +100,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     trailing: Switch(
                       value: darkMode,
                       activeColor: Colors.green,
-                      onChanged: (value) {
+                      onChanged: (value) async {
                         setState(() => darkMode = value);
+
                         FruitClassificationApp.setDarkMode(context, value);
+
+                        await LocalStorageService.saveDarkMode(value);
                       },
                     ),
                   ),
