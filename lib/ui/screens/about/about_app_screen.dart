@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 
 class AboutAppScreen extends StatelessWidget {
   const AboutAppScreen({super.key});
@@ -6,6 +7,7 @@ class AboutAppScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final lang = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor:
@@ -48,9 +50,9 @@ class AboutAppScreen extends StatelessWidget {
 
                   const SizedBox(height: 36),
 
-                  const Text(
-                    'Fruit Classifier',
-                    style: TextStyle(
+                  Text(
+                    lang.aboutAppTitle,
+                    style: const TextStyle(
                       color: Colors.green,
                       fontSize: 22,
                       fontWeight: FontWeight.w700,
@@ -60,7 +62,7 @@ class AboutAppScreen extends StatelessWidget {
                   const SizedBox(height: 6),
 
                   Text(
-                    'AI-Powered Quality Detection',
+                    lang.aboutAppSubtitle,
                     style: TextStyle(
                       fontSize: 14,
                       color: isDark
@@ -72,10 +74,7 @@ class AboutAppScreen extends StatelessWidget {
                   const SizedBox(height: 40),
 
                   Text(
-                    'Our advanced AI technology helps you classify fruits '
-                        'and assess their quality with high accuracy. '
-                        'Simply scan any fruit to get instant results '
-                        'and maintain a complete history of your classifications.',
+                    lang.aboutAppDescription,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 14,
@@ -89,7 +88,7 @@ class AboutAppScreen extends StatelessWidget {
                   const SizedBox(height: 30),
 
                   Text(
-                    'Version 1.0.0',
+                    lang.versionText,
                     style: TextStyle(
                       fontSize: 13,
                       color: isDark
@@ -101,7 +100,7 @@ class AboutAppScreen extends StatelessWidget {
                   const SizedBox(height: 4),
 
                   Text(
-                    '© 2025 Fruit Classifier Inc.',
+                    lang.copyrightText,
                     style: TextStyle(
                       fontSize: 12,
                       color: isDark
@@ -118,7 +117,7 @@ class AboutAppScreen extends StatelessWidget {
                     child: ElevatedButton.icon(
                       onPressed: () {},
                       icon: const Icon(Icons.mail_outline),
-                      label: const Text('Contact Us'),
+                      label: Text(lang.contactUs),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green,
                         foregroundColor: Colors.white,
@@ -137,10 +136,10 @@ class AboutAppScreen extends StatelessWidget {
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      _StatItem(value: '99%', label: 'Accuracy'),
-                      _StatItem(value: '10k+', label: 'Users'),
-                      _StatItem(value: '50+', label: 'Fruits'),
+                    children: [
+                      _StatItem(value: '99%', label: lang.accuracy),
+                      _StatItem(value: '10k+', label: lang.users),
+                      _StatItem(value: '50+', label: lang.fruits),
                     ],
                   ),
                 ],

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fruit_classification/ui/screens/profile/storage/user_storage.dart';
 import 'package:fruit_classification/ui/screens/history/history_screen.dart';
 import 'package:fruit_classification/ui/screens/splash/splash_screen.dart';
+import '../../../l10n/app_localizations.dart';
 import '../auth/login_screen.dart';
 import 'editProfile/edit_profile_screen.dart';
 import 'package:fruit_classification/ui/screens/settings/settings_screen.dart';
@@ -19,15 +20,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final user = UserStorage.currentUser;
+    final loc = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        title: const Text(
-          "Profile",
-          style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+        title: Text(
+          loc.profile,
+          style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
         ),
         iconTheme: const IconThemeData(color: Colors.green),
       ),
@@ -71,7 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
             const SizedBox(height: 20),
 
-            profileItem(Icons.edit,"Edit Profile",onTap: () async {
+            profileItem(Icons.edit,loc.editProfile,onTap: () async {
               await Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -79,30 +81,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               );
               setState(() {});
-            },
-            ),
+            }),
 
-            profileItem(Icons.history,"History",onTap: () {
+            profileItem(Icons.history,loc.history,onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (_) => const HistoryScreen(),
                 ),
               );
-            },
-            ),
+            }),
 
-            profileItem(Icons.settings,"Settings",onTap: () {
+            profileItem(Icons.settings,loc.settings,onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (_) => const SettingsScreen(),
                 ),
               );
-            },
-            ),
+            }),
 
-            profileItem(Icons.logout,"Log Out",
+            profileItem(Icons.logout,loc.logout,
                 color: Colors.redAccent,
                 onTap: () {showLogoutDialog(context);}
             ),
@@ -113,19 +112,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void showLogoutDialog(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: Theme.of(context).cardColor,
-        title: Text("Log Out",
+        title: Text(loc.logout,
             style: TextStyle(
                 color: Theme.of(context).textTheme.titleMedium?.color,
                 fontWeight: FontWeight.bold)),
-        content: const Text("Are you sure you want to log out?"),
+        content: Text(loc.confirmLogout),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text("Cancel",
+            child: Text(loc.cancel,
                 style: TextStyle(
                     color: Theme.of(context).textTheme.bodyMedium?.color)),
           ),
@@ -136,7 +137,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             onPressed: () {
               logout(context);
             },
-            child: const Text("Log Out"),
+            child: Text(loc.logout),
           ),
         ],
       ),

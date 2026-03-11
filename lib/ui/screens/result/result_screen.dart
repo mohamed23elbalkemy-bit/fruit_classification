@@ -4,6 +4,7 @@ import '../../../core/routes/app_routes.dart';
 import '../../../core/services/notification_service.dart';
 import '../history/data/history_storage.dart';
 import 'model/fruit_result_model.dart';
+import '../../../l10n/app_localizations.dart';
 
 class ResultScreen extends StatefulWidget {
   final FruitResult result;
@@ -25,9 +26,10 @@ class _ResultScreenState extends State<ResultScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
@@ -35,13 +37,12 @@ class _ResultScreenState extends State<ResultScreen> {
           icon: const Icon(Icons.arrow_back, color: Colors.green),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
-          "Result",
-          style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+        title: Text(
+          loc.result,
+          style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
-
       body: Container(
         margin: const EdgeInsets.all(20),
         padding: const EdgeInsets.all(20),
@@ -56,11 +57,9 @@ class _ResultScreenState extends State<ResultScreen> {
             ),
           ],
         ),
-
         child: SingleChildScrollView(
           child: Column(
             children: [
-
               GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -88,9 +87,7 @@ class _ResultScreenState extends State<ResultScreen> {
                   );
                 },
               ),
-
               const SizedBox(height: 30),
-
               Text(
                 widget.result.name,
                 style: const TextStyle(
@@ -99,25 +96,21 @@ class _ResultScreenState extends State<ResultScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-
               const SizedBox(height: 6),
-
               Text(
-                "Quality: ${widget.result.grade}",
+                '${loc.quality}: ${widget.result.grade}',
                 style: const TextStyle(
                   color: Colors.green,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-
               const SizedBox(height: 40),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    "Accuracy",
-                    style: TextStyle(
+                  Text(
+                    loc.accuracy,
+                    style: const TextStyle(
                       color: Colors.green,
                       fontWeight: FontWeight.bold,
                     ),
@@ -131,9 +124,7 @@ class _ResultScreenState extends State<ResultScreen> {
                   ),
                 ],
               ),
-
               const SizedBox(height: 6),
-
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: LinearProgressIndicator(
@@ -144,9 +135,7 @@ class _ResultScreenState extends State<ResultScreen> {
                   const AlwaysStoppedAnimation<Color>(Colors.green),
                 ),
               ),
-
               const SizedBox(height: 50),
-
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -163,14 +152,14 @@ class _ResultScreenState extends State<ResultScreen> {
                       AppRoutes.cameraScreen,
                     );
                   },
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.refresh, color: Colors.white),
-                      SizedBox(width: 6),
+                      const Icon(Icons.refresh, color: Colors.white),
+                      const SizedBox(width: 6),
                       Text(
-                        "Scan Again",
-                        style: TextStyle(
+                        loc.scanAgain,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
@@ -179,9 +168,7 @@ class _ResultScreenState extends State<ResultScreen> {
                   ),
                 ),
               ),
-
               const SizedBox(height: 20),
-
               SizedBox(
                 width: double.infinity,
                 child: OutlinedButton(
@@ -197,9 +184,9 @@ class _ResultScreenState extends State<ResultScreen> {
                     NotificationService.showHistorySaved();
                     Navigator.pop(context);
                   },
-                  child: const Text(
-                    "Save to History",
-                    style: TextStyle(
+                  child: Text(
+                    loc.saveToHistory,
+                    style: const TextStyle(
                       color: Colors.green,
                       fontWeight: FontWeight.bold,
                     ),

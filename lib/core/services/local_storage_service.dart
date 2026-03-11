@@ -11,5 +11,13 @@ class LocalStorageService {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getBool('dark_mode') ?? false;
   }
+  static Future<void> saveLanguage(String code) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('language', code);
+  }
 
+  static Future<String> getLanguage() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('language') ?? 'en';
+  }
 }

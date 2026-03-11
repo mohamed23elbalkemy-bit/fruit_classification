@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/widgets/onboarding_button.dart';
 import '../../../core/widgets/onboarding_indicator.dart';
 import '../../../core/routes/app_routes.dart';
+import '../../../l10n/app_localizations.dart';
 
 class Onboarding1 extends StatelessWidget {
   const Onboarding1({super.key});
@@ -10,6 +11,7 @@ class Onboarding1 extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final loc = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -38,15 +40,15 @@ class Onboarding1 extends StatelessWidget {
 
             const SizedBox(height: 65),
 
-            const Text(
-              'Identify Fruit Instantly',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            Text(
+              loc.identifyFruitInstantly,
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
 
             const SizedBox(height: 12),
 
             Text(
-              'Scan or upload a fruit image and get instant classification.',
+              loc.scanOrUploadFruit,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
@@ -57,7 +59,7 @@ class Onboarding1 extends StatelessWidget {
             const Spacer(),
 
             OnboardingButton(
-              text: 'Next',
+              text: loc.next,
               onPressed: () {
                 Navigator.push(context, AppRoutes.onboarding2Screen);
               },
@@ -70,7 +72,7 @@ class Onboarding1 extends StatelessWidget {
                 Navigator.pushReplacement(context, AppRoutes.loginScreen);
               },
               child: Text(
-                'Skip',
+                loc.skip,
                 style: TextStyle(
                   color: isDark ? Colors.grey.shade400 : Colors.grey,
                   fontSize: 16,

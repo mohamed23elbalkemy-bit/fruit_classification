@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/widgets/onboarding_button.dart';
 import '../../../core/widgets/onboarding_indicator.dart';
 import '../../../core/routes/app_routes.dart';
+import '../../../l10n/app_localizations.dart';
 
 class Onboarding2 extends StatelessWidget {
   const Onboarding2({super.key});
@@ -10,6 +11,7 @@ class Onboarding2 extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final loc = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -60,9 +62,9 @@ class Onboarding2 extends StatelessWidget {
                             : Colors.white,
                         borderRadius: BorderRadius.circular(18),
                       ),
-                      child: const Text(
-                        '99% Accuracy',
-                        style: TextStyle(
+                      child: Text(
+                        loc.accuracy99,
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
                         ),
@@ -93,15 +95,15 @@ class Onboarding2 extends StatelessWidget {
 
             const SizedBox(height: 50),
 
-            const Text(
-              'High Accuracy Classification',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            Text(
+              loc.highAccuracyClassification,
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
 
             const SizedBox(height: 12),
 
             Text(
-              'Our AI model detects fruit type and quality.',
+              loc.aiDetectsFruit,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
@@ -112,7 +114,7 @@ class Onboarding2 extends StatelessWidget {
             const Spacer(),
 
             OnboardingButton(
-              text: 'Next',
+              text: loc.next,
               onPressed: () {
                 Navigator.push(context, AppRoutes.onboarding3Screen);
               },
@@ -125,7 +127,7 @@ class Onboarding2 extends StatelessWidget {
                 Navigator.pushReplacement(context, AppRoutes.loginScreen);
               },
               child: Text(
-                'Skip',
+                loc.skip,
                 style: TextStyle(
                   color: isDark ? Colors.grey.shade400 : Colors.grey,
                   fontSize: 16,

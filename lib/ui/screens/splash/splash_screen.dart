@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../../core/routes/app_routes.dart';
+import '../../../l10n/app_localizations.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -43,8 +44,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final loc = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -69,7 +70,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 width: 110,
                 height: 110,
                 decoration: BoxDecoration(
-                  color:Colors.white,
+                  color: Colors.white,
                   shape: BoxShape.circle,
                 ),
                 child: Padding(
@@ -82,30 +83,24 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
           ),
-
           const SizedBox(height: 30),
-
-          const Text(
-            'Fruit Classification',
-            style: TextStyle(
+          Text(
+            loc.fruitClassification,
+            style: const TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
               color: Color(0xFF4CAF50),
             ),
           ),
-
           const SizedBox(height: 8),
-
           Text(
-            'AI-Powered Fruit Recognition',
+            loc.aiPoweredFruitRecognition,
             style: TextStyle(
               fontSize: 14,
               color: isDark ? Colors.grey.shade400 : const Color(0xFF9E9E9E),
             ),
           ),
-
           const SizedBox(height: 40),
-
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 60),
             child: ClipRRect(
@@ -120,11 +115,9 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
           ),
-
           const SizedBox(height: 12),
-
           Text(
-            'Loading...',
+            loc.loading,
             style: TextStyle(
               color: isDark ? Colors.grey.shade400 : const Color(0xFF9E9E9E),
             ),

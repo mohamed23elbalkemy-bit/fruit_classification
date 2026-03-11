@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../model/user_model.dart';
 import '../storage/user_storage.dart';
-
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
 
@@ -12,7 +12,6 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-
   late TextEditingController nameController;
   late TextEditingController emailController;
 
@@ -39,6 +38,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   void _showImagePicker() {
+    final loc = AppLocalizations.of(context)!; // <-- هنا جبنا الـ loc
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
@@ -52,7 +52,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             children: [
               ListTile(
                 leading: const Icon(Icons.camera_alt, color: Colors.green),
-                title: const Text("Take Photo"),
+                title: Text(loc.takePhoto),
                 onTap: () {
                   Navigator.pop(context);
                   _pickImage(ImageSource.camera);
@@ -60,7 +60,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
               ListTile(
                 leading: const Icon(Icons.photo, color: Colors.green),
-                title: const Text("Choose from Gallery"),
+                title: Text(loc.chooseFromGallery),
                 onTap: () {
                   Navigator.pop(context);
                   _pickImage(ImageSource.gallery);
@@ -86,14 +86,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+
     return Scaffold(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: AppBar(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
-        title: const Text(
-          "Edit Profile",
-          style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+        title: Text(
+          loc.editProfile,
+          style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
         ),
         iconTheme: const IconThemeData(color: Colors.green),
       ),
@@ -101,14 +103,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-
             GestureDetector(
               onTap: _showImagePicker,
               child: CircleAvatar(
                 radius: 45,
-                backgroundImage: selectedImagePath!.startsWith('assets')
-                    ? AssetImage(selectedImagePath!)
-                    : FileImage(File(selectedImagePath!)) as ImageProvider,
+                backgroundImage: (selectedImagePath != null && selectedImagePath!.startsWith('assets'))
+                    ? AssetImage(selectedImagePath!) as ImageProvider
+                    : (selectedImagePath != null
+                    ? FileImage(File(selectedImagePath!))
+                    : null), // أو حط صورة افتراضية هنا
                 child: const Align(
                   alignment: Alignment.bottomRight,
                   child: CircleAvatar(
@@ -119,23 +122,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
               ),
             ),
-
             const SizedBox(height: 25),
-
             TextField(
               controller: nameController,
-              decoration: const InputDecoration(labelText: "Name"),
+              decoration: InputDecoration(labelText: loc.name),
             ),
-
             const SizedBox(height: 16),
-
             TextField(
               controller: emailController,
-              decoration: const InputDecoration(labelText: "Email"),
+              decoration: InputDecoration(labelText: loc.email),
             ),
-
             const SizedBox(height: 30),
-
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -147,9 +144,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                 ),
                 onPressed: _save,
-                child: const Text(
-                  "Save Changes",
-                  style: TextStyle(
+                child: Text(
+                  loc.saveChanges,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),

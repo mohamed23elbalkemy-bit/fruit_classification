@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fruit_classification/ui/screens/about/about_app_screen.dart';
-
 import '../../../app/app.dart';
 import '../../../core/services/local_storage_service.dart';
 import '../../../core/services/notification_service.dart';
+import '../../../l10n/app_localizations.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -15,6 +15,8 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   bool notifications = true;
   bool darkMode = false;
+  String language = "en";
+
   @override
   void initState() {
     super.initState();
@@ -23,13 +25,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   void _loadSettings() async {
     bool savedTheme = await LocalStorageService.getDarkMode();
+    String savedLang = await LocalStorageService.getLanguage();
 
     setState(() {
       darkMode = savedTheme;
+      language = savedLang;
     });
   }
+
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
@@ -38,13 +45,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Settings",
-              style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+            Text(
+              loc.settings,
+              style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 6),
             Text(
-              "Manage your app preferences",
+              loc.manageAppPreferences,
               style: TextStyle(
                 color: Theme.of(context).textTheme.bodySmall?.color,
                 fontSize: 16,
@@ -54,12 +61,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
         iconTheme: const IconThemeData(color: Colors.green),
       ),
-
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -68,67 +73,58 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               child: Column(
                 children: [
-
                   _settingTile(
                     icon: Icons.notifications_none,
-                    title: "Notifications",
-                    subtitle: "Receive alerts and updates",
+                    title: loc.notifications,
+                    subtitle: loc.receiveAlertsAndUpdates,
                     trailing: Switch(
                       value: notifications,
                       activeColor: Colors.green,
                       onChanged: (value) async {
                         setState(() => notifications = value);
-
                         if (value) {
                           await NotificationService.showNotification(
                             title: "FruitAI",
-                            body: "Notifications Enabled Successfully",
+                            body: loc.notificationsEnabledSuccessfully,
                           );
                         }
                       },
                     ),
                   ),
-
                   const SizedBox(height: 16),
                   const Divider(),
                   const SizedBox(height: 16),
-
                   _settingTile(
                     icon: Icons.dark_mode_outlined,
-                    title: "Dark Mode",
-                    subtitle: "Switch to dark theme",
+                    title: loc.darkMode,
+                    subtitle: loc.switchToDarkTheme,
                     trailing: Switch(
                       value: darkMode,
                       activeColor: Colors.green,
                       onChanged: (value) async {
                         setState(() => darkMode = value);
-
                         FruitClassificationApp.setDarkMode(context, value);
-
                         await LocalStorageService.saveDarkMode(value);
                       },
                     ),
                   ),
-
                   const SizedBox(height: 16),
                   const Divider(),
                   const SizedBox(height: 16),
-
                   _settingTile(
                     icon: Icons.language,
-                    title: "Language",
-                    subtitle: "English",
+                    title: loc.language,
+                    subtitle: language == "en" ? loc.english : loc.arabic,
                     trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                    onTap: _showLanguageDialog,
                   ),
-
                   const SizedBox(height: 16),
                   const Divider(),
                   const SizedBox(height: 16),
-
                   _settingTile(
                     icon: Icons.info_outline,
-                    title: "About App",
-                    subtitle: "App information & details",
+                    title: loc.aboutApp,
+                    subtitle: loc.appInformationAndDetails,
                     trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                     onTap: () {
                       Navigator.push(
@@ -142,11 +138,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ],
               ),
             ),
-
             const SizedBox(height: 20),
-
             Text(
-              "Version 1.0.0",
+              loc.version,
               style: TextStyle(
                 color: Theme.of(context).textTheme.bodySmall?.color,
               ),
@@ -154,6 +148,43 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  void _showLanguageDialog() {
+    final loc = AppLocalizations.of(context)!;
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Theme.of(context).cardColor,
+          title: Text(loc.selectLanguage),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: Text(loc.english),
+                onTap: () async {
+                  setState(() => language = "en");
+                  FruitClassificationApp.setLanguage(context, "en");
+                  await LocalStorageService.saveLanguage("en");
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text(loc.arabic),
+                onTap: () async {
+                  setState(() => language = "ar");
+                  FruitClassificationApp.setLanguage(context, "ar");
+                  await LocalStorageService.saveLanguage("ar");
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 

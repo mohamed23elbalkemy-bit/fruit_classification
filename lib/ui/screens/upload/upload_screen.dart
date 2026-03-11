@@ -1,25 +1,24 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../result/model/fruit_result_model.dart';
 import '../result/result_screen.dart';
+import '../../../l10n/app_localizations.dart';
 
 class UploadScreen extends StatelessWidget {
   const UploadScreen({super.key});
 
   Future<void> _pickImage(BuildContext context) async {
-
     final ImagePicker picker = ImagePicker();
+    final loc = AppLocalizations.of(context)!;
 
     try {
-
       final List<XFile> images = await picker.pickMultiImage();
 
       if (images.length < 4) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Please select at least 4 images"),
+          SnackBar(
+            content: Text(loc.pleaseSelectAtLeast4Images),
           ),
         );
         return;
@@ -39,7 +38,6 @@ class UploadScreen extends StatelessWidget {
           builder: (_) => ResultScreen(result: result),
         ),
       );
-
     } catch (e) {
       debugPrint("Upload image error: $e");
     }
@@ -47,10 +45,10 @@ class UploadScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -58,22 +56,18 @@ class UploadScreen extends StatelessWidget {
           icon: const Icon(Icons.close, color: Colors.green),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
-          "Upload Fruit Images",
-          style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+        title: Text(
+          loc.uploadFruitImages,
+          style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
         ),
       ),
-
       body: Padding(
         padding: const EdgeInsets.all(20),
-
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             Container(
               padding: const EdgeInsets.all(20),
-
               decoration: BoxDecoration(
                 color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(20),
@@ -81,12 +75,9 @@ class UploadScreen extends StatelessWidget {
                   color: Colors.green.withOpacity(0.4),
                 ),
               ),
-
               child: Column(
                 children: [
-
                   const SizedBox(height: 10),
-
                   CircleAvatar(
                     radius: 30,
                     backgroundColor: Colors.green.withOpacity(0.15),
@@ -95,33 +86,25 @@ class UploadScreen extends StatelessWidget {
                         color: Colors.green,
                         size: 30),
                   ),
-
                   const SizedBox(height: 25),
-
                   Text(
-                    "Upload 4 images of the fruit",
+                    loc.upload4ImagesOfTheFruit,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).textTheme.titleMedium?.color,
                     ),
                   ),
-
                   const SizedBox(height: 10),
-
                   Text(
-                    "Choose four images showing different sides",
+                    loc.chooseFourImagesShowingDifferentSides,
                     style: TextStyle(
                       color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7),
                     ),
                   ),
-
                   const SizedBox(height: 26),
-
                   SizedBox(
                     width: double.infinity,
-
                     child: ElevatedButton(
-
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green,
                         padding: const EdgeInsets.symmetric(vertical: 14),
@@ -129,21 +112,16 @@ class UploadScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(14),
                         ),
                       ),
-
                       onPressed: () => _pickImage(context),
-
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-
-                          Icon(Icons.photo_size_select_actual_outlined,
+                        children: [
+                          const Icon(Icons.photo_size_select_actual_outlined,
                               color: Colors.white),
-
-                          SizedBox(width: 6),
-
+                          const SizedBox(width: 6),
                           Text(
-                            "Choose Images",
-                            style: TextStyle(
+                            loc.chooseImages,
+                            style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -151,36 +129,30 @@ class UploadScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 26),
-
-                  const Text(
-                    "Supports: JPG, PNG, WEBP",
-                    style: TextStyle(
+                  Text(
+                    loc.supportsJpgPngWebp,
+                    style: const TextStyle(
                         color: Colors.grey,
                         fontSize: 12),
                   ),
                 ],
               ),
             ),
-
             const SizedBox(height: 35),
-
             Text(
-              "Tips for best results",
+              loc.tipsForBestResults,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
                 color: Theme.of(context).textTheme.titleMedium?.color,
               ),
             ),
-
             const SizedBox(height: 16),
-
-            const Tip("Take images from 4 different angles"),
-            const Tip("Use clear, well-lit photos"),
-            const Tip("Center the fruit in the frame"),
-            const Tip("Avoid blurry or dark images"),
+            Tip(loc.tipTakeImagesFrom4DifferentAngles),
+            Tip(loc.tipUseClearWellLitPhotos),
+            Tip(loc.tipCenterTheFruitInTheFrame),
+            Tip(loc.tipAvoidBlurryOrDarkImages),
           ],
         ),
       ),
@@ -197,15 +169,12 @@ class Tip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 6),
-
       child: Row(
         children: [
           const Icon(Icons.check_circle,
               color: Colors.green,
               size: 18),
-
           const SizedBox(width: 8),
-
           Expanded(
             child: Text(
               text,

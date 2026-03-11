@@ -6,6 +6,7 @@ class RecentItem extends StatelessWidget {
   final String title;
   final String confidence;
   final String time;
+  final String confidenceLabel; // <-- النص المترجم
 
   const RecentItem({
     super.key,
@@ -13,6 +14,7 @@ class RecentItem extends StatelessWidget {
     required this.title,
     required this.confidence,
     required this.time,
+    required this.confidenceLabel, // <-- النص المترجم
   });
 
   @override
@@ -25,7 +27,6 @@ class RecentItem extends StatelessWidget {
       ),
       child: Row(
         children: [
-          /// IMAGE
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: Image.file(
@@ -35,10 +36,7 @@ class RecentItem extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-
-
           const SizedBox(width: 14),
-
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,16 +50,13 @@ class RecentItem extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-
                 const SizedBox(height: 4),
-
                 Text(
-                  'Confidence: $confidence',
+                  '$confidenceLabel: $confidence', // <-- استخدام النص المترجم
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(color: Colors.grey),
                 ),
-
                 Text(
                   time,
                   style: const TextStyle(color: Colors.grey),
@@ -69,9 +64,7 @@ class RecentItem extends StatelessWidget {
               ],
             ),
           ),
-
           const SizedBox(width: 10),
-
           const Icon(
             Icons.check_circle,
             color: Color(0xFF4CAF50),

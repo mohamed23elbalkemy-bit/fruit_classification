@@ -3,8 +3,10 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../result/model/fruit_result_model.dart';
 import '../result/result_screen.dart';
+
 
 class CameraScreen extends StatefulWidget {
   const CameraScreen({super.key});
@@ -23,13 +25,6 @@ class _CameraScreenState extends State<CameraScreen> {
   final ImagePicker _picker = ImagePicker();
 
   int currentStep = 0;
-
-  final List<String> steps = [
-    "Take Front Photo",
-    "Take Back Photo",
-    "Take Left Photo",
-    "Take Right Photo"
-  ];
 
   @override
   void initState() {
@@ -83,12 +78,14 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   Future<void> _openGallery() async {
+    final loc = AppLocalizations.of(context)!;
+
     try {
       final List<XFile> images = await _picker.pickMultiImage();
 
       if (images.length < 4) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Please select 4 images")),
+          SnackBar(content: Text(loc.selectFourImages)),
         );
         return;
       }
@@ -142,8 +139,23 @@ class _CameraScreenState extends State<CameraScreen> {
     );
   }
 
+  String _getStepText(AppLocalizations loc) {
+    switch (currentStep) {
+      case 0:
+        return loc.takeFrontPhoto;
+      case 1:
+        return loc.takeBackPhoto;
+      case 2:
+        return loc.takeLeftPhoto;
+      default:
+        return loc.takeRightPhoto;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
@@ -170,7 +182,7 @@ class _CameraScreenState extends State<CameraScreen> {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
-                  steps[currentStep],
+                  _getStepText(loc),
                   style: const TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),

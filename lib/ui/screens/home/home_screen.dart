@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../../core/widgets/mainActionButton.dart';
 import '../../../core/widgets/recentItem.dart';
+import '../../../l10n/app_localizations.dart';
 import '../history/data/history_storage.dart';
 import '../../../core/services/notification_service.dart';
 
@@ -38,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final recent = HistoryStorage.history.take(3).toList();
+    final loc = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -79,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
 
             Text(
-              "Classify Your Fruit",
+              loc.classifyYourFruit,
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -90,9 +92,13 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 6),
 
             Text(
-              "Take a photo or upload an image to identify any fruit",
+              loc.takePhotoOrUpload,
               style: TextStyle(
-                color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7),
+                color: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.color
+                    ?.withOpacity(0.7),
               ),
             ),
 
@@ -100,8 +106,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
             MainActionButton(
               icon: Icons.camera_alt,
-              title: "Open Camera",
-              subtitle: "Take a photo",
+              title: loc.openCamera,
+              subtitle: loc.takePhoto,
               isPrimary: true,
               onTap: () {
                 _openScreen(AppRoutes.cameraScreen);
@@ -112,8 +118,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
             MainActionButton(
               icon: Icons.image_outlined,
-              title: "Upload Image",
-              subtitle: "From gallery",
+              title: loc.uploadImage,
+              subtitle: loc.fromGallery,
               isPrimary: false,
               onTap: () {
                 _openScreen(AppRoutes.uploadImageScreen);
@@ -126,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Recent Classifications",
+                  loc.recentClassifications,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -137,9 +143,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   onTap: () {
                     Navigator.push(context, AppRoutes.historyScreen);
                   },
-                  child: const Text(
-                    "View All",
-                    style: TextStyle(
+                  child: Text(
+                    loc.viewAll,
+                    style: const TextStyle(
                       color: Colors.green,
                       fontWeight: FontWeight.w600,
                     ),
@@ -152,9 +158,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
             if (recent.isEmpty)
               Text(
-                "No recent classifications yet",
+                loc.noRecentClassifications,
                 style: TextStyle(
-                  color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7),
+                  color: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.color
+                      ?.withOpacity(0.7),
                 ),
               )
             else
@@ -169,6 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       "${(item.accuracy * 100).toStringAsFixed(1)}%",
                       time:
                       "${item.dateTime.hour}:${item.dateTime.minute.toString().padLeft(2, '0')}",
+                      confidenceLabel: loc.confidence,
                     ),
                   );
                 }).toList(),

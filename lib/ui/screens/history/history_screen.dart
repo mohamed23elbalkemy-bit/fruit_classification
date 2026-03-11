@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-
 import '../../../core/services/notification_service.dart';
+import '../../../l10n/app_localizations.dart';
 import '../result/result_screen.dart';
 import 'data/history_storage.dart';
 
@@ -16,15 +16,18 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    final loc = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
 
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        title: const Text(
-          "Classification History",
-          style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+        title: Text(
+          loc.classificationHistory,
+          style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
         ),
         iconTheme: const IconThemeData(color: Colors.green),
 
@@ -38,17 +41,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      title: const Text("Delete all history?"),
-                      content: const Text(
-                        "This action cannot be undone. Are you sure you want to delete all classifications?",
-                      ),
+                      title: Text(loc.deleteAllHistory),
+                      content: Text(loc.deleteHistoryConfirm),
                       actions: [
                         TextButton(
                           onPressed: () {
                             Navigator.pop(context, false);
                           },
                           child: Text(
-                            "Cancel",
+                            loc.cancel,
                             style: TextStyle(
                               color: Theme.of(context).textTheme.bodyMedium?.color,
                             ),
@@ -61,9 +62,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           onPressed: () {
                             Navigator.pop(context, true);
                           },
-                          child: const Text(
-                            "Delete",
-                            style: TextStyle(color: Colors.white),
+                          child: Text(
+                            loc.delete,
+                            style: const TextStyle(color: Colors.white),
                           ),
                         ),
                       ],
@@ -85,7 +86,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
       body: HistoryStorage.history.isEmpty
           ? Center(
         child: Text(
-          "No history yet",
+          loc.noHistoryYet,
           style: TextStyle(
             color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.6),
           ),
@@ -148,7 +149,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
       ),
     );
   }
-
 
   Widget _historyItem({
     required BuildContext context,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../../core/widgets/onboarding_button.dart';
 import '../../../core/widgets/onboarding_indicator.dart';
+import '../../../l10n/app_localizations.dart';
 
 class Onboarding3 extends StatelessWidget {
   const Onboarding3({super.key});
@@ -10,6 +11,7 @@ class Onboarding3 extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final loc = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -38,15 +40,15 @@ class Onboarding3 extends StatelessWidget {
 
             const SizedBox(height: 80),
 
-            const Text(
-              'Start Your Journey',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            Text(
+              loc.startYourJourney,
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
 
             const SizedBox(height: 12),
 
             Text(
-              "Let's classify your fruit now!",
+              loc.letsClassifyFruit,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
@@ -57,7 +59,7 @@ class Onboarding3 extends StatelessWidget {
             const SizedBox(height: 60),
 
             OnboardingButton(
-              text: 'Get Started',
+              text: loc.getStarted,
               onPressed: () {
                 Navigator.push(context, AppRoutes.loginScreen);
               },

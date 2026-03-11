@@ -4,6 +4,7 @@ import '../../../core/services/auth_service.dart';
 import '../../../core/utils/validators.dart';
 import '../../../core/widgets/authButton.dart';
 import '../../../core/widgets/authField.dart';
+import '../../../l10n/app_localizations.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -23,9 +24,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    final loc = AppLocalizations.of(context)!;
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -53,9 +57,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                   const SizedBox(height: 30),
 
-                  const Text(
-                    'Create Account',
-                    style: TextStyle(
+                  Text(
+                    loc.createAccount,
+                    style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w600,
                     ),
@@ -63,9 +67,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                   const SizedBox(height: 6),
 
-                  const Text(
-                    'Join us to start classifying fruits',
-                    style: TextStyle(
+                  Text(
+                    loc.joinUsToStartClassifyingFruits,
+                    style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 14,
                     ),
@@ -74,7 +78,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(height: 40),
 
                   AuthField(
-                    hint: 'Choose a username',
+                    hint: loc.chooseUsername,
                     icon: Icons.person_outline,
                     controller: usernameController,
                     validator: Validators.username,
@@ -83,7 +87,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(height: 18),
 
                   AuthField(
-                    hint: 'Enter your email',
+                    hint: loc.enterYourEmail,
                     icon: Icons.email_outlined,
                     controller: emailController,
                     validator: Validators.email,
@@ -92,7 +96,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(height: 18),
 
                   AuthField(
-                    hint: 'Create a password',
+                    hint: loc.createPassword,
                     icon: Icons.lock_outline,
                     isPassword: true,
                     controller: passwordController,
@@ -102,7 +106,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(height: 26),
 
                   AuthButton(
-                    text: isLoading ? 'Creating...' : 'Create Account',
+                    text: isLoading ? loc.creating : loc.createAccount,
                     onPressed: isLoading
                         ? null
                         : () async {
@@ -129,16 +133,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                   const SizedBox(height: 30),
 
-                  const Text('or', style: TextStyle(color: Colors.grey)),
+                  Text(loc.or, style: const TextStyle(color: Colors.grey)),
 
                   const SizedBox(height: 30),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        'Already have an account? ',
-                        style: TextStyle(fontSize: 13),
+                      Text(
+                        loc.alreadyHaveAccount,
+                        style: const TextStyle(fontSize: 13),
                       ),
                       InkWell(
                         onTap: () {
@@ -147,9 +151,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             AppRoutes.loginScreen,
                           );
                         },
-                        child: const Text(
-                          'Sign in',
-                          style: TextStyle(
+                        child: Text(
+                          loc.signIn,
+                          style: const TextStyle(
                             color: Color(0xFF34A853),
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
@@ -161,10 +165,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                   const SizedBox(height: 30),
 
-                  const Text(
-                    'By creating an account, you agree to our Terms & Privacy Policy',
+                  Text(
+                    loc.termsAndPrivacy,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 11,
                       color: Colors.grey,
                     ),

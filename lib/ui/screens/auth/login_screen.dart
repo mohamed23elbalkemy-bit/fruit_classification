@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fruit_classification/l10n/app_localizations.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../../core/services/auth_service.dart';
 import '../../../core/utils/validators.dart';
@@ -22,9 +23,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    final loc = AppLocalizations.of(context)!;
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -52,22 +56,22 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   const SizedBox(height: 30),
 
-                  const Text(
-                    'Welcome Back',
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+                  Text(
+                    loc.welcomeBack,
+                    style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
                   ),
 
                   const SizedBox(height: 6),
 
                   Text(
-                    'Sign in to continue classifying fruits',
+                    loc.loginSubtitle,
                     style: TextStyle(color: Theme.of(context).textTheme.bodyMedium!.color),
                   ),
 
                   const SizedBox(height: 40),
 
                   AuthField(
-                    hint: 'Enter your email',
+                    hint: loc.enterEmail,
                     icon: Icons.email_outlined,
                     controller: emailController,
                     validator: Validators.email,
@@ -76,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 18),
 
                   AuthField(
-                    hint: 'Enter your password',
+                    hint: loc.enterPassword,
                     icon: Icons.lock_outline,
                     isPassword: true,
                     controller: passwordController,
@@ -89,9 +93,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     alignment: Alignment.centerRight,
                     child: TextButton(
                       onPressed: () {},
-                      child: const Text(
-                        'Forgot password?',
-                        style: TextStyle(
+                      child: Text(
+                        loc.forgotPassword,
+                        style: const TextStyle(
                           color: Color(0xFF34A853),
                           fontSize: 13,
                         ),
@@ -102,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 20),
 
                   AuthButton(
-                    text: isLoading ? 'Logging in...' : 'Login',
+                    text: isLoading ? loc.loggingIn : loc.login,
                     onPressed: isLoading
                         ? null
                         : () async {
@@ -124,9 +128,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         );
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
+                          SnackBar(
                             content:
-                            Text('Invalid email or password'),
+                            Text(loc.invalidLogin),
                           ),
                         );
                       }
@@ -135,16 +139,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   const SizedBox(height: 30),
 
-                  Text('or', style: TextStyle(color: Theme.of(context).textTheme.bodyMedium!.color)),
+                  Text(loc.or, style: TextStyle(color: Theme.of(context).textTheme.bodyMedium!.color)),
 
                   const SizedBox(height: 30),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        'Don’t have an account? ',
-                        style: TextStyle(fontSize: 13),
+                      Text(
+                        loc.noAccount,
+                        style: const TextStyle(fontSize: 13),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -153,9 +157,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             AppRoutes.registerScreen,
                           );
                         },
-                        child: const Text(
-                          'Create an account',
-                          style: TextStyle(
+                        child: Text(
+                          loc.createAccount,
+                          style: const TextStyle(
                             color: Color(0xFF34A853),
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
@@ -168,7 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 30),
 
                   Text(
-                    'By continuing, you agree to our Terms & Privacy Policy',
+                    loc.termsPrivacy,
                     textAlign: TextAlign.center,
                     style: TextStyle(color: Theme.of(context).textTheme.bodyMedium!.color),
                   ),

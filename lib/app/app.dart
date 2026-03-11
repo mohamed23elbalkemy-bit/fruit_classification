@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import '../core/services/local_storage_service.dart';
+import '../l10n/app_localizations.dart';
 import '../ui/screens/splash/splash_screen.dart';
-
 class FruitClassificationApp extends StatefulWidget {
   const FruitClassificationApp({super.key});
 
@@ -9,7 +10,12 @@ class FruitClassificationApp extends StatefulWidget {
     final state = context.findAncestorStateOfType<_FruitClassificationAppState>();
     state?.changeTheme(value);
   }
+  static void setLanguage(BuildContext context, String code) {
+    final state =
+    context.findAncestorStateOfType<_FruitClassificationAppState>();
 
+    state?.changeLanguage(code);
+  }
   @override
   State<FruitClassificationApp> createState() => _FruitClassificationAppState();
 }
@@ -19,8 +25,24 @@ class _FruitClassificationAppState extends State<FruitClassificationApp> {
   void initState() {
     super.initState();
     _loadTheme();
-  }
+    void _loadLanguage() async {
+      String code = await LocalStorageService.getLanguage();
 
+      setState(() {
+        _locale = Locale(code);
+      });
+    }
+  }
+  Locale _locale = const Locale('en');
+
+  void changeLanguage(String code) async {
+
+    setState(() {
+      _locale = Locale(code);
+    });
+
+    await LocalStorageService.saveLanguage(code);
+  }
   void _loadTheme() async {
     bool savedTheme = await LocalStorageService.getDarkMode();
     setState(() {
@@ -40,6 +62,19 @@ class _FruitClassificationAppState extends State<FruitClassificationApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      locale: _locale,
+
+      supportedLocales: const [
+        Locale('en'),
+        Locale('ar'),
+      ],
+
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       debugShowCheckedModeBanner: false,
 
       themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
